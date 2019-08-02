@@ -11,6 +11,9 @@ import UIKit
 class ViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet var numberButtons: [UIButton]!
+    @IBOutlet var equationButtons: [UIButton]!
+    
+    @IBOutlet weak var equalButton: UIButton!
     
     var elements: [String] {
         return textView.text.split(separator: " ").map { "\($0)" }
@@ -39,7 +42,6 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    
     // View actions
     @IBAction func tappedNumberButton(_ sender: UIButton) {
         guard let numberText = sender.title(for: .normal) else {
@@ -54,26 +56,34 @@ class ViewController: UIViewController {
     }
     
     @IBAction func tappedAdditionButton(_ sender: UIButton) {
+        sender.layer.opacity = 0.5
+        
         if canAddOperator {
             textView.text.append(" + ")
         } else {
             let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             self.present(alertVC, animated: true, completion: nil)
+            sender.layer.opacity = 1
         }
     }
     
     @IBAction func tappedSubstractionButton(_ sender: UIButton) {
+        sender.layer.opacity = 0.5
+        
         if canAddOperator {
             textView.text.append(" - ")
         } else {
             let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             self.present(alertVC, animated: true, completion: nil)
+            sender.layer.opacity = 1
         }
     }
 
     @IBAction func tappedEqualButton(_ sender: UIButton) {
+        equationButtons.forEach {$0.layer.opacity = 1}
+        
         guard expressionIsCorrect else {
             let alertVC = UIAlertController(title: "Zéro!", message: "Entrez une expression correcte !", preferredStyle: .alert)
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
