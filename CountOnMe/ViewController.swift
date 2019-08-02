@@ -80,6 +80,32 @@ class ViewController: UIViewController {
             sender.layer.opacity = 1
         }
     }
+    
+    @IBAction func tappedDivisionButton(_ sender: UIButton) {
+        sender.layer.opacity = 0.5
+        
+        if canAddOperator {
+            textView.text.append(" / ")
+        } else {
+            let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
+            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            self.present(alertVC, animated: true, completion: nil)
+            sender.layer.opacity = 1
+        }
+    }
+    
+    @IBAction func tappedMultiplicationButton(_ sender: UIButton) {
+        sender.layer.opacity = 0.5
+        
+        if canAddOperator {
+            textView.text.append(" x ")
+        } else {
+            let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
+            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            self.present(alertVC, animated: true, completion: nil)
+            sender.layer.opacity = 1
+        }
+    }
 
     @IBAction func tappedEqualButton(_ sender: UIButton) {
         equationButtons.forEach {$0.layer.opacity = 1}
@@ -109,6 +135,8 @@ class ViewController: UIViewController {
             switch operand {
             case "+": result = left + right
             case "-": result = left - right
+            case "/": result = left / right
+            case "x": result = left * right
             default: fatalError("Unknown operator !")
             }
             
