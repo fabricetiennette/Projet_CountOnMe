@@ -42,69 +42,53 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func refesh() {
+        equationButtons.forEach {$0.layer.opacity = 1}
+        textView.text = ""
+    }
+    
     // View actions
     @IBAction func tappedNumberButton(_ sender: UIButton) {
         guard let numberText = sender.title(for: .normal) else {
             return
         }
         
-        if expressionHaveResult {
+        if textView.text == "0" {
             textView.text = ""
         }
         
+        if expressionHaveResult {
+            textView.text = ""
+        }
         textView.text.append(numberText)
     }
     
-    @IBAction func tappedAdditionButton(_ sender: UIButton) {
-        sender.layer.opacity = 0.5
-        
+    private func equationDisplay(button: UIButton, unit: String) {
+        button.layer.opacity = 0.5
         if canAddOperator {
-            textView.text.append(" + ")
+            textView.text.append(unit)
         } else {
             let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             self.present(alertVC, animated: true, completion: nil)
-            sender.layer.opacity = 1
+            button.layer.opacity = 1
         }
+    }
+    
+    @IBAction func tappedAdditionButton(_ sender: UIButton) {
+        equationDisplay(button: sender, unit: " + ")
     }
     
     @IBAction func tappedSubstractionButton(_ sender: UIButton) {
-        sender.layer.opacity = 0.5
-        
-        if canAddOperator {
-            textView.text.append(" - ")
-        } else {
-            let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            self.present(alertVC, animated: true, completion: nil)
-            sender.layer.opacity = 1
-        }
+        equationDisplay(button: sender, unit: " - ")
     }
     
     @IBAction func tappedDivisionButton(_ sender: UIButton) {
-        sender.layer.opacity = 0.5
-        
-        if canAddOperator {
-            textView.text.append(" / ")
-        } else {
-            let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            self.present(alertVC, animated: true, completion: nil)
-            sender.layer.opacity = 1
-        }
+        equationDisplay(button: sender, unit: " / ")
     }
     
     @IBAction func tappedMultiplicationButton(_ sender: UIButton) {
-        sender.layer.opacity = 0.5
-        
-        if canAddOperator {
-            textView.text.append(" x ")
-        } else {
-            let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            self.present(alertVC, animated: true, completion: nil)
-            sender.layer.opacity = 1
-        }
+        equationDisplay(button: sender, unit: " x ")
     }
 
     @IBAction func tappedEqualButton(_ sender: UIButton) {
@@ -145,6 +129,7 @@ class ViewController: UIViewController {
         }
         
         textView.text.append(" = \(operationsToReduce.first!)")
+        print("checkfinal")
     }
 
 }
