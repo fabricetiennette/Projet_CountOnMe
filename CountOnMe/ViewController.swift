@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet var numberButtons: [UIButton]!
     @IBOutlet var equationButtons: [UIButton]!
-    
+    @IBOutlet weak var  refeshButton: UIButton!
     @IBOutlet weak var equalButton: UIButton!
     
     var elements: [String] {
@@ -45,14 +45,19 @@ class ViewController: UIViewController {
     @IBAction func refesh() {
         equationButtons.forEach {$0.layer.opacity = 1}
         textView.text = ""
+        refeshButton.setTitle("AC", for: .normal)
+        numberButtons.forEach {$0.isEnabled = true}
     }
+    
     
     // View actions
     @IBAction func tappedNumberButton(_ sender: UIButton) {
-        guard let numberText = sender.title(for: .normal) else {
-            return
-        }
+        guard let numberText = sender.title(for: .normal) else { return }
         
+        
+        if textView.text.count >= 6 {
+            numberButtons.forEach {$0.isEnabled = false}
+        }
         if textView.text == "0" {
             textView.text = ""
         }
@@ -61,9 +66,11 @@ class ViewController: UIViewController {
             textView.text = ""
         }
         textView.text.append(numberText)
+        refeshButton.setTitle("C", for: .normal)
     }
     
     private func equationDisplay(button: UIButton, unit: String) {
+        numberButtons.forEach {$0.isEnabled = true}
         button.layer.opacity = 0.5
         if canAddOperator {
             textView.text.append(unit)
@@ -93,7 +100,8 @@ class ViewController: UIViewController {
 
     @IBAction func tappedEqualButton(_ sender: UIButton) {
         equationButtons.forEach {$0.layer.opacity = 1}
-        
+        numberButtons.forEach {$0.isEnabled = true}
+
         guard expressionIsCorrect else {
             let alertVC = UIAlertController(title: "Zéro!", message: "Entrez une expression correcte !", preferredStyle: .alert)
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -117,20 +125,21 @@ class ViewController: UIViewController {
             
             let result: Int
             switch operand {
-            case "+": result = left + right
-            case "-": result = left - right
-            case "/": result = left / right
-            case "x": result = left * right
+            case "+":
+                result = left + right
+            case "-":
+                result = left - right
+            case "/":
+                result = left / right
+            case "x":
+                result = left * right
             default: fatalError("Unknown operator !")
             }
             
             operationsToReduce = Array(operationsToReduce.dropFirst(3))
             operationsToReduce.insert("\(result)", at: 0)
         }
-        
-        textView.text.append(" = \(operationsToReduce.first!)")
-        print("checkfinal")
+        textView.text = "\(operationsToReduce[0])"
+        refeshButton.setTitle("AC", for: .normal)
     }
-
 }
-
