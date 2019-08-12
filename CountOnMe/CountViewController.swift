@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  CountController.swift
 //  SimpleCalc
 //
 //  Created by Vincent Saluzzo on 29/03/2019.
@@ -8,15 +8,17 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-    @IBOutlet weak var textView: UITextView!
+class CountViewController: UIViewController {
+    @IBOutlet weak var resultTextView: UITextView!
+    
+    @IBOutlet weak var displayCalculationTextView: UITextView!
     @IBOutlet var numberButtons: [UIButton]!
     @IBOutlet var equationButtons: [UIButton]!
     @IBOutlet weak var  refeshButton: UIButton!
     @IBOutlet weak var equalButton: UIButton!
     
     var elements: [String] {
-        return textView.text.split(separator: " ").map { "\($0)" }
+        return displayCalculationTextView.text.split(separator: " ").map { "\($0)" }
     }
     
     // Error check computed variables
@@ -33,7 +35,7 @@ class ViewController: UIViewController {
     }
     
     var expressionHaveResult: Bool {
-        return textView.text.firstIndex(of: "=") != nil
+        return resultTextView.text.firstIndex(of: "=") != nil
     }
     
     // View Life cycles
@@ -44,7 +46,8 @@ class ViewController: UIViewController {
     
     @IBAction func refesh() {
         equationButtons.forEach {$0.layer.opacity = 1}
-        textView.text = ""
+        resultTextView.text = ""
+        displayCalculationTextView.text = ""
         refeshButton.setTitle("AC", for: .normal)
         numberButtons.forEach {$0.isEnabled = true}
     }
@@ -55,17 +58,14 @@ class ViewController: UIViewController {
         guard let numberText = sender.title(for: .normal) else { return }
         
         
-        if textView.text.count >= 6 {
+        if displayCalculationTextView.text.count >= 6 {
             numberButtons.forEach {$0.isEnabled = false}
-        }
-        if textView.text == "0" {
-            textView.text = ""
         }
         
         if expressionHaveResult {
-            textView.text = ""
+            displayCalculationTextView.text = ""
         }
-        textView.text.append(numberText)
+        displayCalculationTextView.text.append(numberText)
         refeshButton.setTitle("C", for: .normal)
     }
     
@@ -73,7 +73,7 @@ class ViewController: UIViewController {
         numberButtons.forEach {$0.isEnabled = true}
         button.layer.opacity = 0.5
         if canAddOperator {
-            textView.text.append(unit)
+            displayCalculationTextView.text.append(unit)
         } else {
             let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -139,7 +139,7 @@ class ViewController: UIViewController {
             operationsToReduce = Array(operationsToReduce.dropFirst(3))
             operationsToReduce.insert("\(result)", at: 0)
         }
-        textView.text = "\(operationsToReduce[0])"
+        resultTextView.text = "\(operationsToReduce[0])"
         refeshButton.setTitle("AC", for: .normal)
     }
 }
