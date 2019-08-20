@@ -9,18 +9,17 @@
 import Foundation
 
 class Calculate {
-    let left: Int
-    let operand: String
-    let right: Int
+    var operationsToReduce: [String]
 
-    init(left: Int, operand: String, right: Int) {
-        self.left = left
-        self.operand = operand
-        self.right = right
+    init(operationsToReduce: [String]) {
+        self.operationsToReduce = operationsToReduce
     }
 
-    func process() -> Int {
-        let result: Int
+    func process() -> Double {
+        let left = Double(operationsToReduce[0])!
+        let operand = operationsToReduce[1]
+        let right = Double(operationsToReduce[2])!
+        let result: Double
         switch operand {
         case "+":
             result = left + right
@@ -30,6 +29,8 @@ class Calculate {
             result = left / right
         case "x":
             result = left * right
+        case "%":
+            result = right * left / 100
         default: fatalError("Unknown operator !")
         }
         return result
