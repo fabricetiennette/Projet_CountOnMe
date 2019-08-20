@@ -9,13 +9,12 @@
 import UIKit
 
 class CountViewController: UIViewController {
-    @IBOutlet weak var resultTextView: UITextView!
-    
-    @IBOutlet weak var displayCalculationTextView: UITextView!
-    @IBOutlet var numberButtons: [UIButton]!
-    @IBOutlet var equationButtons: [UIButton]!
-    @IBOutlet weak var  refeshButton: UIButton!
-    @IBOutlet weak var equalButton: UIButton!
+    @IBOutlet private weak var resultTextView: UITextView!
+    @IBOutlet private weak var displayCalculationTextView: UITextView!
+    @IBOutlet private var numberButtons: [UIButton]!
+    @IBOutlet private var equationButtons: [UIButton]!
+    @IBOutlet private weak var  refeshButton: UIButton!
+    @IBOutlet private weak var equalButton: UIButton!
     
     var elements: [String] {
         return displayCalculationTextView.text.split(separator: " ").map { "\($0)" }
@@ -44,7 +43,22 @@ class CountViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    @IBAction func refesh() {
+    private func equationDisplay(button: UIButton, unit: String) {
+        numberButtons.forEach {$0.isEnabled = true}
+        button.layer.opacity = 0.5
+        if canAddOperator {
+            displayCalculationTextView.text.append(unit)
+        } else {
+            let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
+            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            self.present(alertVC, animated: true, completion: nil)
+            button.layer.opacity = 1
+        }
+    }
+}
+
+private extension CountViewController {
+    @IBAction func refresh() {
         equationButtons.forEach {$0.layer.opacity = 1}
         resultTextView.text = ""
         displayCalculationTextView.text = ""
@@ -69,19 +83,6 @@ class CountViewController: UIViewController {
         refeshButton.setTitle("C", for: .normal)
     }
     
-    private func equationDisplay(button: UIButton, unit: String) {
-        numberButtons.forEach {$0.isEnabled = true}
-        button.layer.opacity = 0.5
-        if canAddOperator {
-            displayCalculationTextView.text.append(unit)
-        } else {
-            let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            self.present(alertVC, animated: true, completion: nil)
-            button.layer.opacity = 1
-        }
-    }
-    
     @IBAction func tappedAdditionButton(_ sender: UIButton) {
         equationDisplay(button: sender, unit: " + ")
     }
@@ -97,11 +98,11 @@ class CountViewController: UIViewController {
     @IBAction func tappedMultiplicationButton(_ sender: UIButton) {
         equationDisplay(button: sender, unit: " x ")
     }
-
+    
     @IBAction func tappedEqualButton(_ sender: UIButton) {
-        equationButtons.forEach {$0.layer.opacity = 1}
-        numberButtons.forEach {$0.isEnabled = true}
-
+        equationButtons.forEach { $0.layer.opacity = 1 }
+        numberButtons.forEach { $0.isEnabled = true }
+        
         guard expressionIsCorrect else {
             let alertVC = UIAlertController(title: "Zéro!", message: "Entrez une expression correcte !", preferredStyle: .alert)
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -123,18 +124,8 @@ class CountViewController: UIViewController {
             let operand = operationsToReduce[1]
             let right = Int(operationsToReduce[2])!
             
-            let result: Int
-            switch operand {
-            case "+":
-                result = left + right
-            case "-":
-                result = left - right
-            case "/":
-                result = left / right
-            case "x":
-                result = left * right
-            default: fatalError("Unknown operator !")
-            }
+            let calculate = Calculate(left: left, operand: operand, right: right)
+            let result = calculate.process()
             
             operationsToReduce = Array(operationsToReduce.dropFirst(3))
             operationsToReduce.insert("\(result)", at: 0)
