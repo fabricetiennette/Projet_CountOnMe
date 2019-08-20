@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eqK-jh-KKu">
-    <device id="retina6_1" orientation="portrait">
+    <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,14 +15,14 @@
             <objects>
                 <viewController id="eqK-jh-KKu" customClass="CountViewController" customModule="CountOnMe" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eIh-hr-C95">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A9A-l7-BKb" userLabel="DisplayView">
-                                <rect key="frame" x="15" y="54" width="384" height="478"/>
+                                <rect key="frame" x="15" y="30" width="345" height="307"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="0" textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="T2H-yn-nBB" userLabel="DisplayResult">
-                                        <rect key="frame" x="0.0" y="398" width="384" height="80"/>
+                                        <rect key="frame" x="0.0" y="227" width="345" height="80"/>
                                         <color key="backgroundColor" red="0.24527746819999999" green="0.53481305040000005" blue="0.58749136739999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="80" id="X9A-My-jWb"/>
@@ -32,7 +32,7 @@
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B4G-ok-wqB" userLabel="DisplayCalculation">
-                                        <rect key="frame" x="0.0" y="0.0" width="384" height="40"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="345" height="40"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="MVF-nv-Vg5"/>
@@ -53,16 +53,16 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VBF-9E-9Ju" userLabel="TouchView">
-                                <rect key="frame" x="15" y="534" width="384" height="318"/>
+                                <rect key="frame" x="15" y="339" width="345" height="318"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="isI-Gg-Iye">
-                                        <rect key="frame" x="0.0" y="0.0" width="384" height="313"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="345" height="313"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="ogr-Aw-e1h">
-                                                <rect key="frame" x="0.0" y="0.0" width="384" height="61"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="345" height="61"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1NX-Fs-mmX">
-                                                        <rect key="frame" x="0.0" y="0.0" width="94.5" height="61"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="85" height="61"/>
                                                         <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="30"/>
                                                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -74,7 +74,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LBF-6k-yNV" userLabel="+/-">
-                                                        <rect key="frame" x="96.5" y="0.0" width="94.5" height="61"/>
+                                                        <rect key="frame" x="87" y="0.0" width="84.5" height="61"/>
                                                         <color key="backgroundColor" red="0.48216420409999999" green="0.4628985524" blue="0.45490074159999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="30"/>
                                                         <state key="normal" title="+/-">
@@ -82,7 +82,7 @@
                                                         </state>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="40c-gg-t3o" userLabel="%">
-                                                        <rect key="frame" x="193" y="0.0" width="94.5" height="61"/>
+                                                        <rect key="frame" x="173.5" y="0.0" width="85" height="61"/>
                                                         <color key="backgroundColor" red="0.48216420412063599" green="0.46289855241775513" blue="0.45490074157714844" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="30"/>
                                                         <state key="normal" title="%">
@@ -90,7 +90,7 @@
                                                         </state>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dIq-Nh-jfR">
-                                                        <rect key="frame" x="289.5" y="0.0" width="94.5" height="61"/>
+                                                        <rect key="frame" x="260.5" y="0.0" width="84.5" height="61"/>
                                                         <color key="backgroundColor" red="0.48216420409999999" green="0.4628985524" blue="0.45490074159999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="30"/>
                                                         <state key="normal" title="/">
@@ -103,10 +103,10 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="U2a-5D-kgc">
-                                                <rect key="frame" x="0.0" y="63" width="384" height="61"/>
+                                                <rect key="frame" x="0.0" y="63" width="345" height="61"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Raa-av-x4n">
-                                                        <rect key="frame" x="0.0" y="0.0" width="94.5" height="61"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="85" height="61"/>
                                                         <color key="backgroundColor" red="0.60392156860000001" green="0.57647058819999997" blue="0.56862745100000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="30"/>
                                                         <state key="normal" title="1">
@@ -117,7 +117,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tMJ-tH-k5u">
-                                                        <rect key="frame" x="96.5" y="0.0" width="94.5" height="61"/>
+                                                        <rect key="frame" x="87" y="0.0" width="84.5" height="61"/>
                                                         <color key="backgroundColor" red="0.60392156860000001" green="0.57647058819999997" blue="0.56862745100000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="30"/>
                                                         <state key="normal" title="2">
@@ -128,7 +128,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W04-n1-Wen">
-                                                        <rect key="frame" x="193" y="0.0" width="94.5" height="61"/>
+                                                        <rect key="frame" x="173.5" y="0.0" width="85" height="61"/>
                                                         <color key="backgroundColor" red="0.60392156860000001" green="0.57647058819999997" blue="0.56862745100000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="30"/>
                                                         <state key="normal" title="3">
@@ -139,7 +139,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DQU-P5-55X">
-                                                        <rect key="frame" x="289.5" y="0.0" width="94.5" height="61"/>
+                                                        <rect key="frame" x="260.5" y="0.0" width="84.5" height="61"/>
                                                         <color key="backgroundColor" red="0.48216420409999999" green="0.4628985524" blue="0.45490074159999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="30"/>
                                                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -153,10 +153,10 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="WCv-mh-kCr">
-                                                <rect key="frame" x="0.0" y="126" width="384" height="61"/>
+                                                <rect key="frame" x="0.0" y="126" width="345" height="61"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UDN-zf-T0y">
-                                                        <rect key="frame" x="0.0" y="0.0" width="94.5" height="61"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="85" height="61"/>
                                                         <color key="backgroundColor" red="0.60392156860000001" green="0.57647058819999997" blue="0.56862745100000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="30"/>
                                                         <state key="normal" title="4">
@@ -167,7 +167,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S66-ub-JAX">
-                                                        <rect key="frame" x="96.5" y="0.0" width="94.5" height="61"/>
+                                                        <rect key="frame" x="87" y="0.0" width="84.5" height="61"/>
                                                         <color key="backgroundColor" red="0.60392156860000001" green="0.57647058819999997" blue="0.56862745100000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="30"/>
                                                         <state key="normal" title="5">
@@ -178,7 +178,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hkr-13-i1X">
-                                                        <rect key="frame" x="193" y="0.0" width="94.5" height="61"/>
+                                                        <rect key="frame" x="173.5" y="0.0" width="85" height="61"/>
                                                         <color key="backgroundColor" red="0.60392156860000001" green="0.57647058819999997" blue="0.56862745100000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="30"/>
                                                         <state key="normal" title="6">
@@ -189,7 +189,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3zr-HC-0N9">
-                                                        <rect key="frame" x="289.5" y="0.0" width="94.5" height="61"/>
+                                                        <rect key="frame" x="260.5" y="0.0" width="84.5" height="61"/>
                                                         <color key="backgroundColor" red="0.48216420409999999" green="0.4628985524" blue="0.45490074159999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="30"/>
                                                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -203,10 +203,10 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="xWG-wS-5L9">
-                                                <rect key="frame" x="0.0" y="189" width="384" height="61"/>
+                                                <rect key="frame" x="0.0" y="189" width="345" height="61"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jd7-ld-hSU">
-                                                        <rect key="frame" x="0.0" y="0.0" width="94.5" height="61"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="85" height="61"/>
                                                         <color key="backgroundColor" red="0.60392156860000001" green="0.57647058819999997" blue="0.56862745100000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="30"/>
                                                         <state key="normal" title="7">
@@ -217,7 +217,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lad-SR-mqj">
-                                                        <rect key="frame" x="96.5" y="0.0" width="94.5" height="61"/>
+                                                        <rect key="frame" x="87" y="0.0" width="84.5" height="61"/>
                                                         <color key="backgroundColor" red="0.60392156860000001" green="0.57647058819999997" blue="0.56862745100000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="30"/>
                                                         <state key="normal" title="8">
@@ -228,7 +228,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EPx-3X-zTa">
-                                                        <rect key="frame" x="193" y="0.0" width="94.5" height="61"/>
+                                                        <rect key="frame" x="173.5" y="0.0" width="85" height="61"/>
                                                         <color key="backgroundColor" red="0.60392156860000001" green="0.57647058819999997" blue="0.56862745100000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="30"/>
                                                         <state key="normal" title="9">
@@ -239,7 +239,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TKb-c8-cfS">
-                                                        <rect key="frame" x="289.5" y="0.0" width="94.5" height="61"/>
+                                                        <rect key="frame" x="260.5" y="0.0" width="84.5" height="61"/>
                                                         <color key="backgroundColor" red="0.48216420409999999" green="0.4628985524" blue="0.45490074159999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="30"/>
                                                         <state key="normal" title="x">
@@ -252,13 +252,13 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="djV-0K-5KM">
-                                                <rect key="frame" x="0.0" y="252" width="384" height="61"/>
+                                                <rect key="frame" x="0.0" y="252" width="345" height="61"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="X8Q-2u-xu7">
-                                                        <rect key="frame" x="0.0" y="0.0" width="191" height="61"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="171.5" height="61"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YD6-ul-r3f">
-                                                                <rect key="frame" x="0.0" y="0.0" width="191" height="61"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="171.5" height="61"/>
                                                                 <color key="backgroundColor" red="0.60392156860000001" green="0.57647058819999997" blue="0.56862745100000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="32"/>
                                                                 <state key="normal" title="0">
@@ -271,10 +271,10 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="z2F-aQ-Djy">
-                                                        <rect key="frame" x="193" y="0.0" width="191" height="61"/>
+                                                        <rect key="frame" x="173.5" y="0.0" width="171.5" height="61"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PkQ-B2-MdY" userLabel=".">
-                                                                <rect key="frame" x="0.0" y="0.0" width="94.5" height="61"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="85" height="61"/>
                                                                 <color key="backgroundColor" red="0.59978407619999996" green="0.57662528749999997" blue="0.56862634420000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="42"/>
                                                                 <state key="normal" title=".">
@@ -282,7 +282,7 @@
                                                                 </state>
                                                             </button>
                                                             <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qMj-Of-bCU">
-                                                                <rect key="frame" x="96.5" y="0.0" width="94.5" height="61"/>
+                                                                <rect key="frame" x="87" y="0.0" width="84.5" height="61"/>
                                                                 <color key="backgroundColor" red="0.94643473759999996" green="0.64318747399999998" blue="0.12665354140000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="42"/>
                                                                 <state key="normal" title="=">
