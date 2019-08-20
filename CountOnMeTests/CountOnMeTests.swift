@@ -1,5 +1,5 @@
 //
-//  CalculateTest.swift
+//  CountOnMeTests.swift
 //  CountOnMeTests
 //
 //  Created by Fabrice Etiennette on 20/08/2019.
@@ -9,7 +9,7 @@
 import XCTest
 @testable import CountOnMe
 
-class CalculateTest: XCTestCase {
+class CountOnMeTests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
