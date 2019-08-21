@@ -16,13 +16,15 @@ class CountViewController: UIViewController {
     @IBOutlet private weak var  refeshButton: UIButton!
     @IBOutlet private weak var equalButton: UIButton!
 
+    var result: Double = 0.0
+
     var elements: [String] {
         return displayCalculation.text.split(separator: " ").map { "\($0)" }
     }
 
     // Error check computed variables
     var expressionIsCorrect: Bool {
-        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/" && elements.last != "%"
+        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/"
     }
 
     var expressionHaveEnoughElement: Bool {
@@ -30,7 +32,7 @@ class CountViewController: UIViewController {
     }
 
     var canAddOperator: Bool {
-        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/" && elements.last != "%"
+        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/"
     }
 
     var expressionHaveResult: Bool {
@@ -91,7 +93,25 @@ private extension CountViewController {
     }
 
     @IBAction func tappedPercentageButton(_ sender: UIButton) {
-        equationDisplay(button: sender, unit: " % ")
+
+        guard expressionHaveEnoughElement else {
+            return alertPopUp(title: "Zero!", message: "Start a new calculation !")
+        }
+
+        var operationToDo = elements
+
+        if operationToDo.contains(Operator.addition.rawValue) || operationToDo.contains(Operator.substraction.rawValue) {
+
+            guard let left = Double(operationToDo[0]) else { return }
+            guard let right = Double(operationToDo[2]) else { return }
+            let result = left * right / 100
+
+            resultTextView.text = "\(result)"
+        } else if operationToDo.contains(Operator.multiplication.rawValue) || operationToDo.contains(Operator.division.rawValue) {
+            let result = 1
+
+            resultTextView.text = "\(result)"
+        }
     }
 
     @IBAction func tappedEqualButton(_ sender: UIButton) {
@@ -99,31 +119,82 @@ private extension CountViewController {
         numberButtons.forEach { $0.isEnabled = true }
 
         guard expressionIsCorrect else {
-            let alertVC = UIAlertController(title: "Zero!", message: "Enter a correct expression!", preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            return self.present(alertVC, animated: true, completion: nil)
+            return alertPopUp(title: "Zero!", message: "Enter a correct expression!")
         }
 
         guard expressionHaveEnoughElement else {
-            let alertVC = UIAlertController(title: "Zero!", message: "Start a new calculation !", preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            return self.present(alertVC, animated: true, completion: nil)
+            return alertPopUp(title: "Zero!", message: "Start a new calculation !")
         }
 
         // Create local copy of operations
         var operationsToReduce = elements
 
         // Iterate over operations while an operand still here
-        while operationsToReduce.count > 1 {
+        while operationsToReduce.contains(Operator.multiplication.rawValue)
+            || operationsToReduce.contains(Operator.division.rawValue) {
 
-            let calculate = Calculate(operationsToReduce: operationsToReduce)
-            let result = calculate.process()
+                let index = operationsToReduce.firstIndex { (element) -> Bool in
+                    if let operation = Operator(rawValue: element),
+                        operation == .multiplication || operation == .division {
+                        return true
+                    } else {
+                        return false
+                    }
+                }
 
-            operationsToReduce = Array(operationsToReduce.dropFirst(3))
-            print(result)
-            operationsToReduce.insert("\(result)", at: 0)
+                if let index = index {
+                    guard let operation = Operator(rawValue: operationsToReduce[index]) else { return }
+
+                    guard let left = Double(operationsToReduce[index - 1]) else { return }
+                    guard let right = Double(operationsToReduce[index + 1]) else { return }
+                    result = operation.process(left: left, right: right)
+
+                    operationsToReduce.remove(at: index - 1)
+                    operationsToReduce.remove(at: index - 1)
+                    operationsToReduce.insert("\(result)", at: index)
+                    operationsToReduce.remove(at: index - 1)
+                }
         }
-        resultTextView.text = "\(operationsToReduce[0])"
+
+        // Iterate over operations while an operand still here
+        while operationsToReduce.contains(Operator.addition.rawValue)
+            || operationsToReduce.contains(Operator.substraction.rawValue) {
+
+                let index = operationsToReduce.firstIndex { (element) -> Bool in
+                    if let operation = Operator(rawValue: element),
+                        operation == .addition || operation == .substraction || operation == .percentage {
+                        return true
+                    } else {
+                        return false
+                    }
+                }
+
+                if let index = index {
+                    guard let operation = Operator(rawValue: operationsToReduce[index]) else { return }
+
+                    guard let left = Double(operationsToReduce[index - 1]) else { return }
+                    guard let right = Double(operationsToReduce[index + 1]) else { return }
+                    result = operation.process(left: left, right: right)
+
+                    operationsToReduce.remove(at: index - 1)
+                    operationsToReduce.remove(at: index - 1)
+                    operationsToReduce.insert("\(result)", at: index)
+                    operationsToReduce.remove(at: index - 1)
+                }
+        }
+        resultTextView.text = "\(operationsToReduce.first!)"
+
+//        if let value = operationsToReduce.first,
+//            let result = Double(value) {
+//
+//            let resultString: String
+//            if  result.truncatingRemainder(dividingBy: 1.0) == 0 {
+//                resultString = String(format: "%.f", result)
+//            } else {
+//                resultString = String(format: "%.2f", result)
+//            }
+//            resultTextView.text = "\(resultString)"
+//        }
     }
 }
 
@@ -138,6 +209,13 @@ private extension CountViewController {
     func equationDisplay(button: UIButton, unit: String) {
         numberButtons.forEach { $0.isEnabled = true }
         button.layer.opacity = 0.5
+
+        if resultTextView.text != "0" && resultTextView.text != "" {
+            displayCalculation.text.removeAll()
+            displayCalculation.text += resultTextView.text
+            resultTextView.text = ""
+        }
+
         if canAddOperator {
             displayCalculation.text.append(unit)
         } else {

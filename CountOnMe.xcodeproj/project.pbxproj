@@ -13,6 +13,7 @@
 		1FA43BDA224E569A00F565CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FA43BD9224E569A00F565CB /* Assets.xcassets */; };
 		1FA43BDD224E569A00F565CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FA43BDB224E569A00F565CB /* LaunchScreen.storyboard */; };
 		2C06A101230C5B2200DFB473 /* CountOnMeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06A100230C5B2200DFB473 /* CountOnMeTests.swift */; };
+		2C081DF1230CA2F200A4FE2D /* Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C081DF0230CA2F200A4FE2D /* Operator.swift */; };
 		2C48970C230BCC4200E67D17 /* Calculate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48970B230BCC4200E67D17 /* Calculate.swift */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +38,7 @@
 		2C06A0FE230C5B2200DFB473 /* CountOnMeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CountOnMeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C06A100230C5B2200DFB473 /* CountOnMeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountOnMeTests.swift; sourceTree = "<group>"; };
 		2C06A102230C5B2200DFB473 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2C081DF0230CA2F200A4FE2D /* Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operator.swift; sourceTree = "<group>"; };
 		2C48970B230BCC4200E67D17 /* Calculate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -101,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				2C48970B230BCC4200E67D17 /* Calculate.swift */,
+				2C081DF0230CA2F200A4FE2D /* Operator.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -255,6 +258,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C48970C230BCC4200E67D17 /* Calculate.swift in Sources */,
+				2C081DF1230CA2F200A4FE2D /* Operator.swift in Sources */,
 				1FA43BD5224E569900F565CB /* CountViewController.swift in Sources */,
 				1FA43BD3224E569900F565CB /* AppDelegate.swift in Sources */,
 			);
