@@ -11,24 +11,34 @@ import XCTest
 
 class CountOnMeTests: XCTestCase {
 
+    var calculation: Calculate!
+
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        calculation = Calculate()
     }
 
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    func testIsExpressionCorrect() {
+        calculation.addNewNumber("9")
+        XCTAssertTrue(calculation.isExpressionCorrect)
     }
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testIsExpressionNotCorrect() {
+        calculation.addNewNumber("")
+        calculation.operators[0] = "+"
+        calculation.elements[0] = ""
+        XCTAssertFalse(calculation.isExpressionCorrect)
     }
 
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testIfCanAddOperator() {
+        calculation.elements[0] = "4"
+        calculation.elements[0] = "0.0"
+        XCTAssertTrue(calculation.canAddOperator)
+    }
+
+    func testIfCanNotAddOperator() {
+        calculation.elements[0] = ""
+        calculation.operators[0] = "+"
+        XCTAssertFalse(calculation.canAddOperator)
     }
 
 }
