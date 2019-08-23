@@ -9,218 +9,125 @@
 import UIKit
 
 class CountViewController: UIViewController {
-    @IBOutlet private weak var resultTextView: UITextView!
-    @IBOutlet private weak var displayCalculation: UITextView!
+
+    /// Instance of Calculate
+    private var calculation = Calculate()
+
+    // MARK: - Outlets
+    @IBOutlet weak private var displayTextView: UITextView!
+    @IBOutlet weak private var resultTextView: UITextView!
     @IBOutlet private var numberButtons: [UIButton]!
-    @IBOutlet private var equationButtons: [UIButton]!
-    @IBOutlet private weak var  refeshButton: UIButton!
-    @IBOutlet private weak var equalButton: UIButton!
-
-    var result: Double = 0.0
-
-    var elements: [String] {
-        return displayCalculation.text.split(separator: " ").map { "\($0)" }
-    }
-
-    // Error check computed variables
-    var expressionIsCorrect: Bool {
-        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/"
-    }
-
-    var expressionHaveEnoughElement: Bool {
-        return elements.count >= 3
-    }
-
-    var canAddOperator: Bool {
-        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/"
-    }
-
-    var expressionHaveResult: Bool {
-        return resultTextView.text.firstIndex(of: "=") != nil
-    }
+    @IBOutlet weak private var acButton: UIButton!
 }
 
+// MARK: - IBAction
 private extension CountViewController {
-    @IBAction func refresh() {
-        equationButtons.forEach {$0.layer.opacity = 1}
-        resultTextView.text = ""
-        displayCalculation.text = ""
-        refeshButton.setTitle("AC", for: .normal)
-        numberButtons.forEach {$0.isEnabled = true}
-    }
 
-    // View actions
-    @IBAction func touchDigits(_ sender: UIButton) {
+    /// numPadButton is used to add numbers for equations
+    @IBAction func numPadButton(_ sender: UIButton) {
         guard let numberText = sender.title(for: .normal) else { return }
+        calculation.addNewNumber(numberText)
+        displayOutput()
+    }
 
-        refeshButton.setTitle("C", for: .normal)
-        if numberText == "." && displayCalculation.text.isEmpty {
-            displayCalculation.text.append("0.")
+    /// decimalButton is used to add decimal. Prevent also also double decimal.
+    @IBAction func decimalButton(_ sender: UIButton) {
+        if calculation.canAddDecimal {
+            calculation.addDecimal()
+            displayOutput()
         } else {
-            if numberText == "." {
-                if let last = elements.last {
-                    if last.contains(".") {
-                        alertPopUp(title: "Decimal Error", message: "A dot has already been entered")
-                    } else {
-                        switch last {
-                        case "+", "-", "/", "x", "%":
-                            displayCalculation.text.append("0.")
-                        default :
-                            displayCalculation.text.append(".")
-                        }
-                    }
-                }
-            } else {
-                displayCalculation.text.append(numberText)
-            }
+            alertPopUp(message: "Only one decimal point is accepted")
         }
     }
 
-    @IBAction func tappedAdditionButton(_ sender: UIButton) {
-        equationDisplay(button: sender, unit: " + ")
+    // division button
+    @IBAction func divisionButton(_ sender: UIButton) {
+        unitDisplay(unit: "÷")
     }
 
-    @IBAction func tappedSubstractionButton(_ sender: UIButton) {
-        equationDisplay(button: sender, unit: " - ")
+    // multiplication button
+    @IBAction func multiplicationButton(_ sender: UIButton) {
+        unitDisplay(unit: "×")
     }
 
-    @IBAction func tappedDivisionButton(_ sender: UIButton) {
-        equationDisplay(button: sender, unit: " / ")
+    // addition button
+    @IBAction func additionButton() {
+        unitDisplay(unit: "+")
     }
 
-    @IBAction func tappedMultiplicationButton(_ sender: UIButton) {
-        equationDisplay(button: sender, unit: " x ")
+    // substraction button
+    @IBAction func substractionButton() {
+        unitDisplay(unit: "-")
     }
 
-    @IBAction func tappedPercentageButton(_ sender: UIButton) {
-
-        guard expressionHaveEnoughElement else {
-            return alertPopUp(title: "Zero!", message: "Start a new calculation !")
+    /// result button. It check if there is a correct equation for calculate and also prevent from having NaN and inf.
+    @IBAction func resultButton() {
+        if !calculation.isExpressionCorrect {
+            alertPopUp(message: "Uncomplete calculation")
+        } else {
+            let result = calculation.calculationLogic()
+            resultOutput(result: result)
         }
-
-        var operationToDo = elements
-
-        if operationToDo.contains(Operator.addition.rawValue) || operationToDo.contains(Operator.substraction.rawValue) {
-
-            guard let left = Double(operationToDo[0]) else { return }
-            guard let right = Double(operationToDo[2]) else { return }
-            let result = left * right / 100
-
-            resultTextView.text = "\(result)"
-        } else if operationToDo.contains(Operator.multiplication.rawValue) || operationToDo.contains(Operator.division.rawValue) {
-            let result = 1
-
-            resultTextView.text = "\(result)"
-        }
+        calculation.reset()
     }
 
-    @IBAction func tappedEqualButton(_ sender: UIButton) {
-        equationButtons.forEach { $0.layer.opacity = 1 }
-        numberButtons.forEach { $0.isEnabled = true }
-
-        guard expressionIsCorrect else {
-            return alertPopUp(title: "Zero!", message: "Enter a correct expression!")
-        }
-
-        guard expressionHaveEnoughElement else {
-            return alertPopUp(title: "Zero!", message: "Start a new calculation !")
-        }
-
-        // Create local copy of operations
-        var operationsToReduce = elements
-
-        // Iterate over operations while an operand still here
-        while operationsToReduce.contains(Operator.multiplication.rawValue)
-            || operationsToReduce.contains(Operator.division.rawValue) {
-
-                let index = operationsToReduce.firstIndex { (element) -> Bool in
-                    if let operation = Operator(rawValue: element),
-                        operation == .multiplication || operation == .division {
-                        return true
-                    } else {
-                        return false
-                    }
-                }
-
-                if let index = index {
-                    guard let operation = Operator(rawValue: operationsToReduce[index]) else { return }
-
-                    guard let left = Double(operationsToReduce[index - 1]) else { return }
-                    guard let right = Double(operationsToReduce[index + 1]) else { return }
-                    result = operation.process(left: left, right: right)
-
-                    operationsToReduce.remove(at: index - 1)
-                    operationsToReduce.remove(at: index - 1)
-                    operationsToReduce.insert("\(result)", at: index)
-                    operationsToReduce.remove(at: index - 1)
-                }
-        }
-
-        // Iterate over operations while an operand still here
-        while operationsToReduce.contains(Operator.addition.rawValue)
-            || operationsToReduce.contains(Operator.substraction.rawValue) {
-
-                let index = operationsToReduce.firstIndex { (element) -> Bool in
-                    if let operation = Operator(rawValue: element),
-                        operation == .addition || operation == .substraction || operation == .percentage {
-                        return true
-                    } else {
-                        return false
-                    }
-                }
-
-                if let index = index {
-                    guard let operation = Operator(rawValue: operationsToReduce[index]) else { return }
-
-                    guard let left = Double(operationsToReduce[index - 1]) else { return }
-                    guard let right = Double(operationsToReduce[index + 1]) else { return }
-                    result = operation.process(left: left, right: right)
-
-                    operationsToReduce.remove(at: index - 1)
-                    operationsToReduce.remove(at: index - 1)
-                    operationsToReduce.insert("\(result)", at: index)
-                    operationsToReduce.remove(at: index - 1)
-                }
-        }
-        resultTextView.text = "\(operationsToReduce.first!)"
-
-//        if let value = operationsToReduce.first,
-//            let result = Double(value) {
-//
-//            let resultString: String
-//            if  result.truncatingRemainder(dividingBy: 1.0) == 0 {
-//                resultString = String(format: "%.f", result)
-//            } else {
-//                resultString = String(format: "%.2f", result)
-//            }
-//            resultTextView.text = "\(resultString)"
-//        }
+    /// AC button reset all text view
+    @IBAction func resetDisplay(_ sender: UIButton) {
+        clearAll()
     }
 }
 
+// MARK: - Methods
+
 private extension CountViewController {
 
-    func alertPopUp(title: String, message: String) {
-        let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    /// unitDisplay is use to add a operator for equation. Also prevent from having double unit.
+    func unitDisplay(unit: String) {
+        if calculation.canAddOperator {
+            calculation.operators.append(unit)
+            calculation.elements.append("")
+            displayOutput()
+        } else {
+            alertPopUp(message: "Only one operator is accepted")
+        }
+    }
+
+    /// alertPopUp is use to creat alert for error or to warn for bad action
+    func alertPopUp(message: String) {
+        let alertVC = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         self.present(alertVC, animated: true, completion: nil)
     }
 
-    func equationDisplay(button: UIButton, unit: String) {
-        numberButtons.forEach { $0.isEnabled = true }
-        button.layer.opacity = 0.5
-
-        if resultTextView.text != "0" && resultTextView.text != "" {
-            displayCalculation.text.removeAll()
-            displayCalculation.text += resultTextView.text
-            resultTextView.text = ""
+    /// displayOutput is use to display the value when user interact with the app
+    func displayOutput() {
+        var equationStr = ""
+        for (index, itemChoose) in calculation.elements.enumerated() {
+//            print("this is a index \(index)")
+            if index > 0 {
+                equationStr += calculation.operators[index]   // Add operator
+//                print(calculation.operators[index])
+            }
+            equationStr += itemChoose   // Add number
         }
+        acButton.setTitle("C", for: .normal)
+        displayTextView.text = equationStr
+    }
 
-        if canAddOperator {
-            displayCalculation.text.append(unit)
+    /// Clear all calculation from user interface screen
+    func clearAll() {
+        acButton.setTitle("AC", for: .normal)
+        displayTextView.text = ""
+        resultTextView.text = "0"
+        calculation.reset()
+    }
+
+    /// resultOutput display the result of an equation
+    func resultOutput(result: Double) {
+        if result.isInfinite || result.isNaN {
+            resultTextView.text = "Error"
         } else {
-            alertPopUp(title: "Zéro!", message: "Un operateur est déja mis !")
-            button.layer.opacity = 1
+            resultTextView.text = "\(Double(result))"
         }
     }
 }
