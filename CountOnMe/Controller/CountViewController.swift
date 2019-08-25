@@ -103,12 +103,10 @@ private extension CountViewController {
     func displayOutput() {
         var equationStr = ""
         for (index, itemChoose) in calculation.elements.enumerated() {
-//            print("this is a index \(index)")
             if index > 0 {
-                equationStr += calculation.operators[index]   // Add operator
-//                print(calculation.operators[index])
+                equationStr += calculation.operators[index]
             }
-            equationStr += itemChoose   // Add number
+            equationStr += itemChoose
         }
         acButton.setTitle("C", for: .normal)
         displayTextView.text = equationStr
