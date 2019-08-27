@@ -13,6 +13,10 @@ class CountViewController: UIViewController {
     /// Instance of Calculate
     private var calculation = Calculate()
 
+    private var elements: [String] {
+        return displayTextView.text.split(separator: " ").map { "\($0)" }
+    }
+
     // MARK: - Outlets
     @IBOutlet weak private var displayTextView: UITextView!
     @IBOutlet weak private var resultTextView: UITextView!
@@ -26,17 +30,33 @@ private extension CountViewController {
     /// numPadButton is used to add numbers for equations
     @IBAction func numPadButton(_ sender: UIButton) {
         guard let numberText = sender.title(for: .normal) else { return }
-        calculation.addNewNumber(numberText)
-        displayOutput()
+
+        if !calculation.expressionIsCorrect(elements: elements) {
+            displayTextView.text.append(" \(numberText)")
+        } else {
+            displayTextView.text.append("\(numberText)")
+        }
+        acButton.setTitle("C", for: .normal)
     }
 
     /// decimalButton is used to add decimal. Prevent also also double decimal.
     @IBAction func decimalButton(_ sender: UIButton) {
-        if calculation.canAddDecimal {
-            calculation.addDecimal()
-            displayOutput()
-        } else {
-            alertPopUp(message: "Only one decimal point is accepted")
+        if calculation.isDecimalAddedToLast(elements: elements) {
+            alertPopUp(message: "An Operator was already added")
+        } else if calculation.expressionIsCorrect(elements: elements) {
+            displayTextView.text.append(".")
+        }
+    }
+
+    // This method is used to erased the last element
+    @IBAction func backSpace() {
+        if displayTextView.text.count > 0 {
+            displayTextView.text.removeLast()
+            // Helps me remove a element containing whitespaces
+            displayTextView.text = displayTextView.text.trimmingCharacters(in: .whitespaces)
+            if displayTextView.text.count == 0 {
+                acButton.setTitle("AC", for: .normal)
+            }
         }
     }
 
@@ -47,7 +67,7 @@ private extension CountViewController {
 
     // multiplication button
     @IBAction func multiplicationButton(_ sender: UIButton) {
-        unitDisplay(unit: "×")
+        unitDisplay(unit: "x")
     }
 
     // addition button
@@ -62,13 +82,18 @@ private extension CountViewController {
 
     /// result button. It check if there is a correct equation for calculate and also prevent from having NaN and inf.
     @IBAction func resultButton() {
-        if !calculation.isExpressionCorrect {
-            alertPopUp(message: "Uncomplete calculation")
-        } else {
-            let result = calculation.calculationLogic()
-            resultOutput(result: result)
+        guard calculation.expressionIsCorrect(elements: elements) else {
+            alertPopUp(message: "Uncorrect expression")
+            return
         }
-        calculation.reset()
+
+        guard calculation.expressionHasEnoughElement(elements: elements) else {
+            alertPopUp(message: "Cannot get any result")
+            return
+        }
+        if let result = calculation.calculTotal(elements: elements) {
+            resultTextView.text = result
+        }
     }
 
     /// AC button reset all text view
@@ -83,12 +108,14 @@ private extension CountViewController {
 
     /// unitDisplay is use to add a operator for equation. Also prevent from having double unit.
     func unitDisplay(unit: String) {
-        if calculation.canAddOperator {
-            calculation.operators.append(unit)
-            calculation.elements.append("")
-            displayOutput()
-        } else {
-            alertPopUp(message: "Only one operator is accepted")
+        if !calculation.expressionIsCorrect(elements: elements) {
+            alertPopUp(message: "An Operator was already added")
+        } else if resultTextView.text != "0" {
+            displayTextView.text = resultTextView.text
+            resultTextView.text = "0"
+            displayTextView.text.append(" \(unit)")
+        } else if calculation.expressionIsCorrect(elements: elements) {
+            displayTextView.text.append(" \(unit)")
         }
     }
 
@@ -99,33 +126,10 @@ private extension CountViewController {
         self.present(alertVC, animated: true, completion: nil)
     }
 
-    /// displayOutput is use to display the value when user interact with the app
-    func displayOutput() {
-        var equationStr = ""
-        for (index, itemChoose) in calculation.elements.enumerated() {
-            if index > 0 {
-                equationStr += calculation.operators[index]
-            }
-            equationStr += itemChoose
-        }
-        acButton.setTitle("C", for: .normal)
-        displayTextView.text = equationStr
-    }
-
     /// Clear all calculation from user interface screen
     func clearAll() {
         acButton.setTitle("AC", for: .normal)
         displayTextView.text = ""
         resultTextView.text = "0"
-        calculation.reset()
-    }
-
-    /// resultOutput display the result of an equation
-    func resultOutput(result: Double) {
-        if result.isInfinite || result.isNaN {
-            resultTextView.text = "Error"
-        } else {
-            resultTextView.text = "\(Double(result))"
-        }
     }
 }
