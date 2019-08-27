@@ -9,6 +9,7 @@
 import XCTest
 
 class CountOnMeUITests: XCTestCase {
+    let app = XCUIApplication()
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -26,9 +27,62 @@ class CountOnMeUITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testNumPadButtons() {
+        app.buttons["1"].tap()
+        app.buttons["2"].tap()
+        app.buttons["3"].tap()
+        app.buttons["4"].tap()
+        app.buttons["5"].tap()
+        app.buttons["6"].tap()
+        app.buttons["7"].tap()
+        app.buttons["8"].tap()
+        app.buttons["9"].tap()
+        app.buttons["0"].tap()
     }
 
+    func testAddButton() {
+        app.buttons["+"].tap()
+    }
+
+    func testSubtractButton() {
+        app.buttons["-"].tap()
+    }
+
+    func testMultipliedButton() {
+        app.buttons["x"].tap()
+    }
+
+    func testDivisionButton() {
+        app.buttons["÷"].tap()
+    }
+
+    func testErrorForOperator() {
+        app.buttons["1"].tap()
+        app.buttons["-"].tap()
+        app.buttons["+"].tap()
+        app.alerts["Error"].buttons["OK"].tap()
+    }
+
+    func testResultButton() {
+        app.buttons["1"].tap()
+        app.buttons["+"].tap()
+        app.buttons["3"].tap()
+        app.buttons["x"].tap()
+        app.buttons["2"].tap()
+        app.buttons["="].tap()
+    }
+
+    func testAcButton() {
+        app.buttons["1"].tap()
+        app.buttons["+"].tap()
+        app.buttons["3"].tap()
+        app.buttons["⌫"].tap()
+        app.buttons["⌫"].tap()
+        app.buttons["⌫"].tap()
+    }
+
+    func testReset() {
+        app.buttons["2"].tap()
+        app.buttons["C"].tap()
+    }
 }
