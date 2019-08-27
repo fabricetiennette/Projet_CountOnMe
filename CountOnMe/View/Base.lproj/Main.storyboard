@@ -82,7 +82,7 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="FOO-Yf-PpN">
                                                         <rect key="frame" x="173.66666666666663" y="0.0" width="171.33333333333337" height="61"/>
                                                         <subviews>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZZ6-gQ-nzA">
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZZ6-gQ-nzA">
                                                                 <rect key="frame" x="0.0" y="0.0" width="84.666666666666671" height="61"/>
                                                                 <color key="backgroundColor" red="0.54893904920000003" green="0.53725439310000001" blue="0.53725510840000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
