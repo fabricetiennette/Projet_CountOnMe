@@ -85,4 +85,51 @@ class CountOnMeUITests: XCTestCase {
         app.buttons["2"].tap()
         app.buttons["C"].tap()
     }
+
+    func testDecimalAlert() {
+        app.buttons["."].tap()
+        app.alerts["Error"].buttons["OK"].tap()
+    }
+
+    func testExpressionIsCorreck() {
+        app.buttons["1"].tap()
+        app.buttons["+"].tap()
+        app.buttons["="].tap()
+        app.alerts["Error"].buttons["OK"].tap()
+    }
+
+    func testResultWithEmptyString() {
+        app.buttons["="].tap()
+        app.alerts["Error"].buttons["OK"].tap()
+    }
+
+    func testContinueWithResult() {
+        app.buttons["1"].tap()
+        app.buttons["+"].tap()
+        app.buttons["3"].tap()
+        app.buttons["x"].tap()
+        app.buttons["2"].tap()
+        app.buttons["="].tap()
+        app.buttons["+"].tap()
+        app.buttons["3"].tap()
+        app.buttons["="].tap()
+    }
+
+    func testAddeDecimal() {
+        app.buttons["1"].tap()
+        app.buttons["."].tap()
+    }
+
+    func testTerminate() {
+        XCUIDevice.shared.press(.home)
+        XCUIApplication().activate()
+        app.buttons["1"].tap()
+        app.buttons["+"].tap()
+        app.buttons["3"].tap()
+        app.buttons["x"].tap()
+        app.buttons["2"].tap()
+        app.buttons["="].tap()
+        XCUIApplication().terminate()
+    }
+
 }
