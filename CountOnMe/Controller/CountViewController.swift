@@ -27,7 +27,7 @@ class CountViewController: UIViewController {
 // MARK: - IBAction
 private extension CountViewController {
 
-    /// numPadButton is used to add numbers for equations
+    // numPadButton is used to add numbers to an array for string for calculation
     @IBAction func numPadButton(_ sender: UIButton) {
         guard let numberText = sender.title(for: .normal) else { return }
 
@@ -39,7 +39,7 @@ private extension CountViewController {
         acButton.setTitle("C", for: .normal)
     }
 
-    /// decimalButton is used to add decimal. Prevent also also double decimal.
+    // decimalButton is used to add decimal. Prevent also also double decimal.
     @IBAction func decimalButton(_ sender: UIButton) {
         if calculation.isDecimalAddedToLast(elements: elements) {
             alertPopUp(message: "An Operator was already added")
@@ -91,13 +91,13 @@ private extension CountViewController {
             alertPopUp(message: "Cannot get any result")
             return
         }
-        if let result = calculation.calculTotal(elements: elements) {
+        if let result = calculation.calculate(elements: elements) {
             resultTextView.text = result
         }
     }
 
-    /// AC button reset all text view
-    @IBAction func resetDisplay(_ sender: UIButton) {
+    // resetButton aka AC button reset all textView
+    @IBAction func resetButton(_ sender: UIButton) {
         clearAll()
     }
 }
@@ -119,7 +119,7 @@ private extension CountViewController {
         }
     }
 
-    /// alertPopUp is use to creat alert for error or to warn for bad action
+    /// alertPopUp is use to create alert for error or to warn for bad action
     func alertPopUp(message: String) {
         let alertVC = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
