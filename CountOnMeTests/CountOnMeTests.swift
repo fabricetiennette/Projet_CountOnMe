@@ -19,57 +19,68 @@ class CountOnMeTests: XCTestCase {
     }
 
     // Test if expression is correct
-    func testForIsExpressionCorrect() {
-        testCalculation.addNewNumber("9")
-        XCTAssertTrue(testCalculation.isExpressionCorrect)
+    func testForIsExpressionCorrect_when1Plus2MultipliedBy3_thenResultShouldReturnTrue() {
+        let elements = ["1", "+", "2", "x", "3"]
+        XCTAssertTrue(testCalculation.expressionIsCorrect(elements: elements))
+        }
+
+    func testForIsExpressionCorrect_when2PlusSubstract_thenResultShouldReturnFalse() {
+        let elements = ["2", "+", "-"]
+        XCTAssertFalse(testCalculation.expressionIsCorrect(elements: elements))
     }
 
     // Test if espression is not correct
-    func testForIsExpressionNotCorrect() {
-        testCalculation.addNewNumber("")
-        testCalculation.operators[0] = "+"
-        testCalculation.elements[0] = ""
-        XCTAssertFalse(testCalculation.isExpressionCorrect)
+    func testForExpressionHasEnoughElment_when1Plus3_thenResultShouldReturnTrue() {
+        let elements = ["1", "+", "3"]
+        XCTAssertTrue(testCalculation.expressionHasEnoughElement(elements: elements))
     }
 
-    // Test if can add an operator
-    func testIfCanAddOperator() {
-        testCalculation.elements[0] = "4"
-        testCalculation.elements[0] = "0.0"
-        XCTAssertTrue(testCalculation.canAddOperator)
+    // Test if can append a decimal. True return an Error message to the user
+    func testIfDecimalIsAdded_whenLastElementHasDecimal_thenResultShouldReturnTrue() {
+        let elements = ["1."]
+        XCTAssertTrue(testCalculation.isDecimalAddedToLast(elements: elements))
     }
 
-    // Test if cannot add any operator
-    func testIfCanNotAddOperator() {
-        testCalculation.elements[0] = ""
-        testCalculation.operators[0] = "+"
-        XCTAssertFalse(testCalculation.canAddOperator)
+    // Test if can append a decimal. True return an Error message to the user
+    func testIfDecimalIsAdded_whenLastElementIsEmpty_thenResultShouldReturnTrue() {
+        let elements = [""]
+        XCTAssertTrue(testCalculation.isDecimalAddedToLast(elements: elements))
     }
 
-    // Test if can add a decimal point
-    func testIfCanAddDecimal() {
-        testCalculation.elements[0] = "1"
-        XCTAssertTrue(testCalculation.canAddDecimal)
+    // Test if can append a decimal. False let the user add a decimal point
+    func testIfDecimalIsAdded_whenLastElementNotDecimalAvailable_thenResultShouldReturnFalse() {
+        let elements = ["1"]
+        XCTAssertFalse(testCalculation.isDecimalAddedToLast(elements: elements))
     }
 
-    // Test if cannot add a decimal
-    func testIfCanNotAddDecimal() {
-        testCalculation.elements[0] = ""
-        testCalculation.addDecimal()
-        XCTAssertFalse(testCalculation.canAddDecimal)
+    // Test if can append a decimal. True return an Error message to the user
+    func testIfDecimalIsAdded_whenElementArrayIsEmpty_thenResultShouldReturnFalse() {
+        let elements = [String]()
+        XCTAssertTrue(testCalculation.isDecimalAddedToLast(elements: elements))
     }
 
-    // Test if can reset calculate properties
-    func testIfCanResetCaculateProperties() {
-        testCalculation.reset()
-        XCTAssertTrue(testCalculation.operators == ["+"])
-        XCTAssertTrue(testCalculation.elements == [""])
+    func testOfCalculation_when2MultipliedBy3_thenResultShouldBe6() {
+        let elements = ["2", "+", "3"]
+        XCTAssertEqual(testCalculation.calculate(elements: elements), "5")
     }
 
-    // Test if cannot reset calculate propeties
-    func testIfCanNotResetCaculateMemory() {
-        testCalculation.reset()
-        XCTAssertFalse(testCalculation.operators == ["+", "-"])
-        XCTAssertFalse(testCalculation.elements == ["1", "4", "8"])
+    func testOfCalculation_when3MultipliedBy2Dividedby4_thenResultShouldbe1Decimal5() {
+        let elements = ["3", "x", "2", "÷", "4"]
+        XCTAssertEqual(testCalculation.calculate(elements: elements), "1.5")
+    }
+
+    func testOfCalculation_when6MultipliedBy10MinusBy4DividedBy2_thenResultShouldBe58() {
+        let elements = ["6", "x", "10", "-", "4", "÷", "2"]
+        XCTAssertEqual(testCalculation.calculate(elements: elements), "58")
+    }
+
+    func testOfCalculation_when3Multiplied3Minus2DividedBy3_ThenResultIs8() {
+        let elementss = ["3", "+", "3", "x", "2", "-", "3", "÷", "3"]
+        XCTAssertEqual(testCalculation.calculate(elements: elementss), "8")
+    }
+
+    func testDivisionBy0_when3DividedBy0_thenResultShouldBeInfinity() {
+        let elements = ["3", "÷", "0"]
+        XCTAssertEqual(testCalculation.calculate(elements: elements), "Error")
     }
 }
