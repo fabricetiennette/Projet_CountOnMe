@@ -9,7 +9,7 @@
 import Foundation
 
 class Calculate {
-
+    /// Enumeration for Operators
     enum Operator: String {
         case add = "+"
         case substract = "-"
@@ -35,8 +35,10 @@ class Calculate {
     /// Checking if operationToReduce countains operator * and /
     func priorityCalculation(_ operationsToReduce: inout [String]) {
         while operationsToReduce.contains("x") || operationsToReduce.contains("÷") {
-            if let index = operationsToReduce.firstIndex(where: {$0 == "x" || $0 == "÷"}), let left = Double(operationsToReduce[index - 1]), let right = Double(operationsToReduce[index + 1]) {
-                guard let operand: Operator = Operator(rawValue: operationsToReduce[index]) else { return }
+            if let index = operationsToReduce.firstIndex(where: {$0 == "x" || $0 == "÷"}),
+                let left = Double(operationsToReduce[index - 1]),
+                let operand: Operator = Operator(rawValue: operationsToReduce[index]),
+                let right = Double(operationsToReduce[index + 1]) {
                 var result = 0.0
 
                 switch operand {
@@ -56,8 +58,9 @@ class Calculate {
 
     /// Calculation + and -
     func nonPriorityCalculation(_ operationsToReduce: inout [String]) {
-        if let left = Double(operationsToReduce[0]), let right = Double(operationsToReduce[2]) {
-            guard let operand: Operator = Operator(rawValue: operationsToReduce[1]) else { return }
+        if let left = Double(operationsToReduce[0]),
+            let operand: Operator = Operator(rawValue: operationsToReduce[1]),
+            let right = Double(operationsToReduce[2]) {
             var result = 0.0
 
             switch operand {
