@@ -18,6 +18,11 @@ class CountOnMeTests: XCTestCase {
         testCalculation = Calculate()
     }
 
+    override func tearDown() {
+        testCalculation = nil
+        super.tearDown()
+    }
+
     // Test if expression is correct
     func testForIsExpressionCorrect_when1Plus2MultipliedBy3_thenResultShouldReturnTrue() {
         let elements = ["1", "+", "2", "x", "3"]
