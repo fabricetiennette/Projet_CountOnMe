@@ -119,17 +119,4 @@ class CountOnMeUITests: XCTestCase {
         app.buttons["1"].tap()
         app.buttons["."].tap()
     }
-
-    func testTerminate() {
-        XCUIDevice.shared.press(.home)
-        XCUIApplication().activate()
-        app.buttons["1"].tap()
-        app.buttons["+"].tap()
-        app.buttons["3"].tap()
-        app.buttons["x"].tap()
-        app.buttons["2"].tap()
-        app.buttons["="].tap()
-        XCUIApplication().terminate()
-    }
-
 }
