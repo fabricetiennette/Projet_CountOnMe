@@ -13,6 +13,7 @@ class CountViewController: UIViewController {
     /// Instance of Calculate
     private var calculation = Calculate()
 
+    /// elements is an array for string 
     private var elements: [String] {
         return displayTextView.text.split(separator: " ").map { "\($0)" }
     }
@@ -20,7 +21,6 @@ class CountViewController: UIViewController {
     // MARK: - Outlets
     @IBOutlet weak private var displayTextView: UITextView!
     @IBOutlet weak private var resultTextView: UITextView!
-    @IBOutlet private var numberButtons: [UIButton]!
     @IBOutlet weak private var acButton: UIButton!
 }
 
@@ -42,7 +42,7 @@ private extension CountViewController {
     // decimalButton is used to add decimal. Prevent also also double decimal.
     @IBAction func decimalButton(_ sender: UIButton) {
         if calculation.isDecimalAddedToLast(elements: elements) {
-            alertPopUp(message: "An Operator was already added")
+            alertPopUp(message: "An Operator has already been added")
         } else if calculation.expressionIsCorrect(elements: elements) {
             displayTextView.text.append(".")
         }
@@ -62,25 +62,25 @@ private extension CountViewController {
 
     // division button
     @IBAction func divisionButton(_ sender: UIButton) {
-        unitDisplay(unit: "÷")
+        unitDisplay(unit: .divide)
     }
 
     // multiplication button
     @IBAction func multiplicationButton(_ sender: UIButton) {
-        unitDisplay(unit: "x")
+        unitDisplay(unit: .multiply)
     }
 
     // addition button
     @IBAction func additionButton() {
-        unitDisplay(unit: "+")
+        unitDisplay(unit: .add)
     }
 
     // substraction button
     @IBAction func substractionButton() {
-        unitDisplay(unit: "-")
+        unitDisplay(unit: .substract)
     }
 
-    /// result button. It check if there is a correct equation for calculate and also prevent from having NaN and inf.
+    /// resultButton check if there is a correct equation for calculate and do the calculation
     @IBAction func resultButton() {
         guard calculation.expressionIsCorrect(elements: elements) else {
             alertPopUp(message: "Uncorrect expression")
@@ -107,15 +107,15 @@ private extension CountViewController {
 private extension CountViewController {
 
     /// unitDisplay is use to add a operator for equation. Also prevent from having double unit.
-    func unitDisplay(unit: String) {
+    func unitDisplay(unit: Calculate.Operator) {
         if !calculation.expressionIsCorrect(elements: elements) {
             alertPopUp(message: "An Operator was already added")
         } else if resultTextView.text != "0" {
             displayTextView.text = resultTextView.text
             resultTextView.text = "0"
-            displayTextView.text.append(" \(unit)")
+            displayTextView.text.append(" \(unit.rawValue)")
         } else if calculation.expressionIsCorrect(elements: elements) {
-            displayTextView.text.append(" \(unit)")
+            displayTextView.text.append(" \(unit.rawValue)")
         }
     }
 
