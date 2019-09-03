@@ -11,7 +11,7 @@ import UIKit
 class CountViewController: UIViewController {
 
     /// Instance of Calculate
-    private var calculation = Calculate()
+    private let calculate = Calculate()
 
     /// elements is an array for string 
     private var elements: [String] {
@@ -31,7 +31,7 @@ private extension CountViewController {
     @IBAction func numPadButton(_ sender: UIButton) {
         guard let numberText = sender.title(for: .normal) else { return }
 
-        if !calculation.expressionIsCorrect(elements: elements) {
+        if !calculate.expressionIsCorrect(elements: elements) {
             displayTextView.text.append(" \(numberText)")
         } else {
             displayTextView.text.append("\(numberText)")
@@ -41,9 +41,9 @@ private extension CountViewController {
 
     // decimalButton is used to add decimal. Prevent also also double decimal.
     @IBAction func decimalButton(_ sender: UIButton) {
-        if calculation.isDecimalAddedToLast(elements: elements) {
+        if calculate.isDecimalAddedToLast(elements: elements) {
             alertPopUp(message: "An Operator has already been added")
-        } else if calculation.expressionIsCorrect(elements: elements) {
+        } else if calculate.expressionIsCorrect(elements: elements) {
             displayTextView.text.append(".")
         }
     }
@@ -82,16 +82,16 @@ private extension CountViewController {
 
     /// resultButton check if there is a correct equation for calculate and do the calculation
     @IBAction func resultButton() {
-        guard calculation.expressionIsCorrect(elements: elements) else {
+        guard calculate.expressionIsCorrect(elements: elements) else {
             alertPopUp(message: "Uncorrect expression")
             return
         }
 
-        guard calculation.expressionHasEnoughElement(elements: elements) else {
+        guard calculate.expressionHasEnoughElement(elements: elements) else {
             alertPopUp(message: "Cannot get any result")
             return
         }
-        if let result = calculation.calculate(elements: elements) {
+        if let result = calculate.calculate(elements: elements) {
             resultTextView.text = result
         }
     }
@@ -108,13 +108,13 @@ private extension CountViewController {
 
     /// unitDisplay is use to add a operator for equation. Also prevent from having double unit.
     func unitDisplay(unit: Calculate.Operator) {
-        if !calculation.expressionIsCorrect(elements: elements) {
+        if !calculate.expressionIsCorrect(elements: elements) {
             alertPopUp(message: "An Operator was already added")
         } else if resultTextView.text != "0" {
             displayTextView.text = resultTextView.text
             resultTextView.text = "0"
             displayTextView.text.append(" \(unit.rawValue)")
-        } else if calculation.expressionIsCorrect(elements: elements) {
+        } else if calculate.expressionIsCorrect(elements: elements) {
             displayTextView.text.append(" \(unit.rawValue)")
         }
     }
