@@ -19,7 +19,7 @@ class Calculate {
 
     /// Checking if the expression is correct to preform calculation
     func expressionIsCorrect(elements: [String]) -> Bool {
-        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "÷" && elements.last != "."
+        return elements.last != Operator.add.rawValue && elements.last != Operator.substract.rawValue && elements.last != Operator.multiply.rawValue && elements.last != Operator.divide.rawValue && elements.last != "."
     }
 
     /// Cheking if there is enough elements in the calcul
@@ -34,19 +34,19 @@ class Calculate {
 
     /// Checking if operationToReduce countains operator * and /
     func priorityCalculation(_ operationsToReduce: inout [String]) {
-        while operationsToReduce.contains("x") || operationsToReduce.contains("÷") {
-            if let index = operationsToReduce.firstIndex(where: {$0 == "x" || $0 == "÷"}),
+        let multiply = Operator.multiply.rawValue
+        let divide = Operator.divide.rawValue
+        while operationsToReduce.contains(multiply) || operationsToReduce.contains(divide) {
+            if let index = operationsToReduce.firstIndex(where: {$0 == multiply || $0 == divide}),
                 let left = Double(operationsToReduce[index - 1]),
                 let operand: Operator = Operator(rawValue: operationsToReduce[index]),
                 let right = Double(operationsToReduce[index + 1]) {
                 var result = 0.0
 
-                switch operand {
-                case .multiply:
+                if operand == .multiply {
                     result = left * right
-                case .divide:
+                } else {
                     result = left / right
-                default: break
                 }
 
                 checkResult(result: result, index: index - 1, operationsToReduce: &operationsToReduce)
@@ -63,12 +63,10 @@ class Calculate {
             let right = Double(operationsToReduce[2]) {
             var result = 0.0
 
-            switch operand {
-            case .add:
+            if operand == .add {
                 result = left + right
-            case .substract:
+            } else {
                 result = left - right
-            default: break
             }
 
             checkResult(result: result, index: 0, operationsToReduce: &operationsToReduce)
