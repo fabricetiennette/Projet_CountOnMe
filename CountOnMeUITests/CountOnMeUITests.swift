@@ -25,6 +25,7 @@ class CountOnMeUITests: XCTestCase {
 
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
+        super.tearDown()
     }
 
     func testNumPadButtons() {
@@ -38,29 +39,41 @@ class CountOnMeUITests: XCTestCase {
         app.buttons["8"].tap()
         app.buttons["9"].tap()
         app.buttons["0"].tap()
+        let exists = app.textViews["1234567890"].exists
+        XCTAssertTrue(exists)
     }
 
     func testAddButton() {
         app.buttons["+"].tap()
+        let exists = app.textViews[" +"].exists
+        XCTAssertTrue(exists)
+
     }
 
     func testSubtractButton() {
         app.buttons["-"].tap()
+        let exists = app.textViews[" -"].exists
+        XCTAssertTrue(exists)
     }
 
     func testMultipliedButton() {
         app.buttons["x"].tap()
+        let exists = app.textViews[" x"].exists
+        XCTAssertTrue(exists)
     }
 
     func testDivisionButton() {
         app.buttons["÷"].tap()
+        let exists = app.textViews[" ÷"].exists
+        XCTAssertTrue(exists)
     }
 
     func testErrorForOperator() {
         app.buttons["1"].tap()
         app.buttons["-"].tap()
         app.buttons["+"].tap()
-        app.alerts["Error"].buttons["OK"].tap()
+        let exists = app.alerts["Error"].exists
+        XCTAssertTrue(exists)
     }
 
     func testResultButton() {
@@ -70,37 +83,52 @@ class CountOnMeUITests: XCTestCase {
         app.buttons["x"].tap()
         app.buttons["2"].tap()
         app.buttons["="].tap()
+        let exists = app.textViews["7"].exists
+        XCTAssertTrue(exists)
     }
 
-    func testAcButton() {
+    func testBackSpaceButton() {
         app.buttons["1"].tap()
         app.buttons["+"].tap()
         app.buttons["3"].tap()
         app.buttons["⌫"].tap()
         app.buttons["⌫"].tap()
-        app.buttons["⌫"].tap()
+        let exists = app.textViews["1"].exists
+        XCTAssertTrue(exists)
     }
 
     func testReset() {
         app.buttons["2"].tap()
         app.buttons["C"].tap()
+        let exists = app.buttons["C"].exists
+        XCTAssertFalse(exists)
+    }
+
+    func testAcButton() {
+        app.buttons["1"].tap()
+        app.buttons["⌫"].tap()
+        let exists = app.buttons["AC"].exists
+        XCTAssertTrue(exists)
     }
 
     func testDecimalAlert() {
         app.buttons["."].tap()
-        app.alerts["Error"].buttons["OK"].tap()
+        let exists = app.alerts["Error"].exists
+        XCTAssertTrue(exists)
     }
 
     func testExpressionIsCorreck() {
         app.buttons["1"].tap()
         app.buttons["+"].tap()
         app.buttons["="].tap()
-        app.alerts["Error"].buttons["OK"].tap()
+        let exists = app.alerts["Error"].exists
+        XCTAssertTrue(exists)
     }
 
     func testResultWithEmptyString() {
         app.buttons["="].tap()
-        app.alerts["Error"].buttons["OK"].tap()
+        let exists = app.alerts["Error"].exists
+        XCTAssertTrue(exists)
     }
 
     func testContinueWithResult() {
@@ -113,10 +141,14 @@ class CountOnMeUITests: XCTestCase {
         app.buttons["+"].tap()
         app.buttons["3"].tap()
         app.buttons["="].tap()
+        let exists = app.textViews["10"].exists
+        XCTAssertTrue(exists)
     }
 
     func testAddeDecimal() {
         app.buttons["1"].tap()
         app.buttons["."].tap()
+        let exists = app.textViews["1."].exists
+        XCTAssertTrue(exists)
     }
 }
