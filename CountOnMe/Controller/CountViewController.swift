@@ -10,12 +10,12 @@ import UIKit
 
 class CountViewController: UIViewController {
 
-    /// Instance of Calculate
-    private let calculate = Calculate()
+    /// Instance of CountViewModel
+    let countViewModel = CountViewModel()
 
     /// elements is an array for string 
     private var elements: [String] {
-        return displayTextView.text.split(separator: " ").map { "\($0)" }
+        return countViewModel.makeElements(from: displayTextView.text)
     }
 
     // MARK: - Outlets
@@ -29,107 +29,52 @@ private extension CountViewController {
 
     // numPadButton is used to add numbers to an array for string for calculation
     @IBAction func numPadButton(_ sender: UIButton) {
-        guard let numberText = sender.title(for: .normal) else { return }
-
-        if !calculate.expressionIsCorrect(elements: elements) {
-            displayTextView.text.append(" \(numberText)")
-        } else {
-            displayTextView.text.append("\(numberText)")
-        }
-        acButton.setTitle("C", for: .normal)
+        let numberText = countViewModel.displayNumbers(from: sender, elements: elements, acButton: acButton)
+        displayTextView.text.append(numberText)
     }
 
     // decimalButton is used to add decimal. Prevent also also double decimal.
     @IBAction func decimalButton(_ sender: UIButton) {
-        if calculate.isDecimalAddedToLast(elements: elements) {
-            alertPopUp(message: "An Operator has already been added")
-        } else if calculate.expressionIsCorrect(elements: elements) {
-            displayTextView.text.append(".")
-        }
+        let text = countViewModel.displayDecimal(on: self, elements: elements)
+        displayTextView.text.append(text)
     }
 
     // This method is used to erased the last element
     @IBAction func backSpace() {
-        if displayTextView.text.count > 0 {
-            displayTextView.text.removeLast()
-            // Helps me remove a element containing whitespaces
-            displayTextView.text = displayTextView.text.trimmingCharacters(in: .whitespaces)
-            if displayTextView.text.count == 0 {
-                acButton.setTitle("AC", for: .normal)
-            }
-        }
+        countViewModel.eraseLast(displayText: &displayTextView.text, acButton: acButton)
     }
 
     // division button
     @IBAction func divisionButton(_ sender: UIButton) {
-        unitDisplay(unit: .divide)
+        let division = countViewModel.unitDisplay(on: self, elements: elements, unit: .divide, displayView: &displayTextView.text, resultView: &resultTextView.text)
+        displayTextView.text.append(division)
     }
 
     // multiplication button
     @IBAction func multiplicationButton(_ sender: UIButton) {
-        unitDisplay(unit: .multiply)
+        let multiply = countViewModel.unitDisplay(on: self, elements: elements, unit: .multiply, displayView: &displayTextView.text, resultView: &resultTextView.text)
+        displayTextView.text.append(multiply)
     }
 
     // addition button
     @IBAction func additionButton() {
-        unitDisplay(unit: .add)
+        let add = countViewModel.unitDisplay(on: self, elements: elements, unit: .add, displayView: &displayTextView.text, resultView: &resultTextView.text)
+        displayTextView.text.append(add)
     }
 
     // substraction button
     @IBAction func substractionButton() {
-        unitDisplay(unit: .substract)
+        let substract = countViewModel.unitDisplay(on: self, elements: elements, unit: .substract, displayView: &displayTextView.text, resultView: &resultTextView.text)
+        displayTextView.text.append(substract)
     }
 
     /// resultButton check if there is a correct equation for calculate and do the calculation
     @IBAction func resultButton() {
-        guard calculate.expressionIsCorrect(elements: elements) else {
-            alertPopUp(message: "Uncorrect expression")
-            return
-        }
-
-        guard calculate.expressionHasEnoughElement(elements: elements) else {
-            alertPopUp(message: "Cannot get any result")
-            return
-        }
-        if let result = calculate.calculate(elements: elements) {
-            resultTextView.text = result
-        }
+        countViewModel.getResult(on: self, elements: elements, resultText: &resultTextView.text)
     }
 
     // resetButton aka AC button reset all textView
     @IBAction func resetButton(_ sender: UIButton) {
-        clearAll()
-    }
-}
-
-// MARK: - Methods
-
-private extension CountViewController {
-
-    /// unitDisplay is use to add a operator for equation. Also prevent from having double unit.
-    func unitDisplay(unit: Calculate.Operator) {
-        if !calculate.expressionIsCorrect(elements: elements) {
-            alertPopUp(message: "An Operator was already added")
-        } else if resultTextView.text != "0" {
-            displayTextView.text = resultTextView.text
-            resultTextView.text = "0"
-            displayTextView.text.append(" \(unit.rawValue)")
-        } else if calculate.expressionIsCorrect(elements: elements) {
-            displayTextView.text.append(" \(unit.rawValue)")
-        }
-    }
-
-    /// alertPopUp is use to create alert for error or to warn for bad action
-    func alertPopUp(message: String) {
-        let alertVC = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-        self.present(alertVC, animated: true, completion: nil)
-    }
-
-    /// Clear all calculation from user interface screen
-    func clearAll() {
-        acButton.setTitle("AC", for: .normal)
-        displayTextView.text = ""
-        resultTextView.text = "0"
+        countViewModel.clearAll(acButton: sender, disPlayText: &displayTextView.text, resultText: &resultTextView.text)
     }
 }
