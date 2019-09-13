@@ -117,8 +117,8 @@
 			isa = PBXGroup;
 			children = (
 				2C06A100230C5B2200DFB473 /* CountOnMeTests.swift */,
-				2C06A102230C5B2200DFB473 /* Info.plist */,
 				2C5DF952232A2F4700DF0BA6 /* CountOnMeViewModelTests.swift */,
+				2C06A102230C5B2200DFB473 /* Info.plist */,
 			);
 			path = CountOnMeTests;
 			sourceTree = "<group>";
