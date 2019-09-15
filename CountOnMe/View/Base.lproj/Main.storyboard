@@ -90,7 +90,7 @@
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="backSpace" destination="eqK-jh-KKu" eventType="touchUpInside" id="esd-W8-TFL"/>
+                                                                    <action selector="backSpaceButton" destination="eqK-jh-KKu" eventType="touchUpInside" id="esd-W8-TFL"/>
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="caA-gC-err">
