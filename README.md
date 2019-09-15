@@ -11,7 +11,7 @@
 
 **. Documentation**
 
-**. MVC Compliance**
+**. MVVM Compliance**
 
 **. Tests**
 
