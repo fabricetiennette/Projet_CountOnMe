@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import UIKit
 
 struct CountViewModel {
 
@@ -20,79 +19,67 @@ struct CountViewModel {
     }
 
     /// Get String from button title. Check if expression of elements is correct and return numberText. Set acButton title to "C".
-    func displayNumbers(from button: UIButton, of elements: [String], set acButton: UIButton) -> String {
-        guard let numberText = button.title(for: .normal) else { return "" }
+    func displayNumbers(from title: String?, of elements: [String]) -> (String, String) {
+        guard let numberText = title else { return ("", "") }
 
         if !calculate.expressionIsCorrect(elements: elements) {
-            return " \(numberText)"
+            return (" \(numberText)", "C")
         }
-        acButton.setTitle("C", for: .normal)
-        return "\(numberText)"
+        return ("\(numberText)", "C")
     }
 
     /// Check if a decimal point is already added. Check if expression of elements is correct return a decimal point.
-    func displayDecimal(on countViewController: UIViewController, of elements: [String]) -> String {
+    func displayDecimal(of elements: [String]) -> String {
         var decimal = ""
-        if calculate.isDecimalAddedToLast(elements: elements) {
-            alertPopUp(on: countViewController, message: "An decimal point has already been added")
-        } else if calculate.expressionIsCorrect(elements: elements) {
+        if calculate.expressionIsCorrect(elements: elements) && !calculate.isDecimalAddedToLast(elements: elements) {
             decimal = "."
         }
         return decimal
     }
 
     /// Erase last elements for displayTextView.text. Set acButton title to "AC" when displayText is empty. trimmingCharacters is used remove a element containing whitespaces
-    func backSpaceKey(displayText: inout String, set acButton: UIButton) {
+    func eraseButtonTapped(displayText: String) -> (String, String) {
+        var displayText = displayText
         if displayText.count > 0 {
             displayText.removeLast()
             displayText = displayText.trimmingCharacters(in: .whitespaces)
             if displayText.count == 0 {
-                acButton.setTitle("AC", for: .normal)
+                return (displayText, "AC")
             }
         }
+        return (displayText, "C")
     }
 
     /// unitDisplay is use to add a operator for equation. Also prevent from having double unit. Check if expression of elements is correct and return unit.rawValue if not correct and alert appear on CountViewController. If user want to continue an equation with the present result it's possible.
-    func unitDisplay(on countViewController: UIViewController, of elements: [String], unit: Calculate.Operator, displayView: inout String, resultView: inout String) -> String {
+    func unitDisplay(of elements: [String], unit: Calculate.Operator, displayView: String, resultView: String) -> (String, String, String) {
         var unitStr = ""
+        var displayView = displayView
+        var resultView = resultView
         if !calculate.expressionIsCorrect(elements: elements) {
-            alertPopUp(on: countViewController, message: "An Operator was already added")
+            return (unitStr, displayView, resultView)
         } else if resultView != "0" {
             displayView = resultView
             resultView = "0"
-            return " \(unit.rawValue)"
+            return (" \(unit.rawValue)", displayView, resultView)
         } else if calculate.expressionIsCorrect(elements: elements) {
             unitStr = " \(unit.rawValue)"
         }
-        return unitStr
+        return (unitStr, displayView, resultView)
     }
 
     /// getResult check if expression of elements is correct and has enough element if not an alert appear on CountViewController else it return the result.
-    func getResult(on countViewController: UIViewController, of elements: [String], resultText: inout String) {
-        guard calculate.expressionIsCorrect(elements: elements) else {
-            alertPopUp(on: countViewController, message: "Uncorrect expression")
-            return
-        }
-        guard calculate.expressionHasEnoughElement(elements: elements) else {
-            alertPopUp(on: countViewController, message: "Cannot get any result")
-            return
-        }
+    func getResult(of elements: [String], resultText: String) -> String {
+        var resultText = resultText
+        guard calculate.expressionIsCorrect(elements: elements) else { return "0" }
+        guard calculate.expressionHasEnoughElement(elements: elements) else { return "0" }
         if let result = calculate.calculate(elements: elements) {
             resultText = result
         }
+        return resultText
     }
 
     /// Clear all calculation from user interface screen. set acButton title to "AC"
-    func clearAll(set acButton: UIButton, disPlayText: inout String, resultText: inout String) {
-        acButton.setTitle("AC", for: .normal)
-        disPlayText = ""
-        resultText = "0"
-    }
-
-    /// alertPopUp is use to create alert for error or to warn for bad action
-    func alertPopUp(on countViewController: UIViewController, message: String) {
-        let alertVC = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-        countViewController.present(alertVC, animated: true, completion: nil)
+    func clearAll() -> (String, String, String) {
+        return ("", "0", "AC")
     }
 }
