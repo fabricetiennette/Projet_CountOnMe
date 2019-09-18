@@ -72,7 +72,7 @@ class CountOnMeUITests: XCTestCase {
         app.buttons["1"].tap()
         app.buttons["-"].tap()
         app.buttons["+"].tap()
-        let exists = app.alerts["Error"].exists
+        let exists = app.textViews["1 -"].exists
         XCTAssertTrue(exists)
     }
 
@@ -111,23 +111,11 @@ class CountOnMeUITests: XCTestCase {
         XCTAssertTrue(exists)
     }
 
-    func testDecimalAlert() {
-        app.buttons["."].tap()
-        let exists = app.alerts["Error"].exists
-        XCTAssertTrue(exists)
-    }
-
     func testExpressionIsCorreck() {
         app.buttons["1"].tap()
         app.buttons["+"].tap()
         app.buttons["="].tap()
-        let exists = app.alerts["Error"].exists
-        XCTAssertTrue(exists)
-    }
-
-    func testResultWithEmptyString() {
-        app.buttons["="].tap()
-        let exists = app.alerts["Error"].exists
+        let exists = app.textViews["1 +"].exists
         XCTAssertTrue(exists)
     }
 
