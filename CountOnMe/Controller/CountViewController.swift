@@ -29,52 +29,70 @@ private extension CountViewController {
 
     // numPadButton is used to add numbers to an array of string for calculation
     @IBAction func numPadButton(_ sender: UIButton) {
-        let numberText = countViewModel.displayNumbers(from: sender, of: elements, set: acButton)
+        let (numberText, acButtonTitle) = countViewModel.displayNumbers(
+            from: sender.title(for: .normal),
+            of: elements
+        )
+        acButton.setTitle(acButtonTitle, for: .normal)
         displayTextView.text.append(numberText)
     }
 
     // decimalButton is used to add decimal. Prevent user to added double decimal points.
     @IBAction func decimalButton(_ sender: UIButton) {
-        let text = countViewModel.displayDecimal(on: self, of: elements)
+        let text = countViewModel.displayDecimal(of: elements)
         displayTextView.text.append(text)
     }
 
     // This method is used to erased the last element
     @IBAction func backSpaceButton() {
-        countViewModel.backSpaceKey(displayText: &displayTextView.text, set: acButton)
+       let (text, title) = countViewModel.eraseButtonTapped(displayText: displayTextView.text)
+        displayTextView.text = text
+        acButton.setTitle(title, for: .normal)
     }
 
     // division button
     @IBAction func divisionButton(_ sender: UIButton) {
-        let division = countViewModel.unitDisplay(on: self, of: elements, unit: .divide, displayView: &displayTextView.text, resultView: &resultTextView.text)
+        let (division, text, resultView) = countViewModel.unitDisplay(of: elements, unit: .divide, displayView: displayTextView.text, resultView: resultTextView.text)
+        displayTextView.text = text
+        resultTextView.text = resultView
         displayTextView.text.append(division)
     }
 
     // multiplication button
     @IBAction func multiplicationButton(_ sender: UIButton) {
-        let multiply = countViewModel.unitDisplay(on: self, of: elements, unit: .multiply, displayView: &displayTextView.text, resultView: &resultTextView.text)
+        let (multiply, text, resultView) = countViewModel.unitDisplay(of: elements, unit: .multiply, displayView: displayTextView.text, resultView: resultTextView.text)
+        displayTextView.text = text
+        resultTextView.text = resultView
         displayTextView.text.append(multiply)
     }
 
     // addition button
     @IBAction func additionButton() {
-        let add = countViewModel.unitDisplay(on: self, of: elements, unit: .add, displayView: &displayTextView.text, resultView: &resultTextView.text)
+        let (add, text, resultView) = countViewModel.unitDisplay(of: elements, unit: .add, displayView: displayTextView.text, resultView: resultTextView.text)
+        displayTextView.text = text
+        resultTextView.text = resultView
         displayTextView.text.append(add)
     }
 
     // substraction button
     @IBAction func substractionButton() {
-        let substract = countViewModel.unitDisplay(on: self, of: elements, unit: .substract, displayView: &displayTextView.text, resultView: &resultTextView.text)
+        let (substract, text, resultView) = countViewModel.unitDisplay(of: elements, unit: .substract, displayView: displayTextView.text, resultView: resultTextView.text)
+        displayTextView.text = text
+        resultTextView.text = resultView
         displayTextView.text.append(substract)
     }
 
     /// resultButton check if there is a correct equation for calculate and do the calculation
     @IBAction func resultButton() {
-        countViewModel.getResult(on: self, of: elements, resultText: &resultTextView.text)
+        let result = countViewModel.getResult(of: elements, resultText: resultTextView.text)
+        resultTextView.text = result
     }
 
     // resetButton aka AC button reset all textView
     @IBAction func resetButton(_ sender: UIButton) {
-        countViewModel.clearAll(set: sender, disPlayText: &displayTextView.text, resultText: &resultTextView.text)
+        let (clearText, backToZero, acButtonTitle) = countViewModel.clearAll()
+        acButton.setTitle(acButtonTitle, for: .normal)
+        displayTextView.text = clearText
+        resultTextView.text = backToZero
     }
 }
