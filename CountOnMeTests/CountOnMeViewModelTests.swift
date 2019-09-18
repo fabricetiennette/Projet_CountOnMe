@@ -30,11 +30,14 @@ class CountOnMeViewModelTests: XCTestCase {
     }
 
     func testClearAll() {
-        let acButton = UIButton()
-        acButton.titleLabel?.text = "C"
         var displayText = "123"
         var resultText = "12"
-        countViewModel.clearAll(set: acButton, disPlayText: &displayText, resultText: &resultText)
+        let acButton = UIButton()
+        acButton.titleLabel?.text = "C"
+        let (clearText, backToZero, acButtonTitle) = countViewModel.clearAll()
+        displayText = clearText
+        resultText = backToZero
+        acButton.setTitle(acButtonTitle, for: .normal)
         XCTAssertTrue(displayText == "")
         XCTAssertTrue(resultText == "0")
         XCTAssertTrue(acButton.title(for: .normal) == "AC")
@@ -44,77 +47,86 @@ class CountOnMeViewModelTests: XCTestCase {
         let acButton = UIButton()
         acButton.titleLabel?.text = "C"
         var displayText = "1"
-        countViewModel.backSpaceKey(displayText: &displayText, set: acButton)
+        let (text, title) = countViewModel.eraseButtonTapped(displayText: displayText)
+        displayText = text
+        acButton.setTitle(title, for: .normal)
         XCTAssertTrue(displayText == "")
         XCTAssertTrue(acButton.title(for: .normal) == "AC")
     }
 
     func testDisplayDecimal() {
         let elements = ["1"]
-        let countViewController = UIViewController()
-        let testAddingDecimal = countViewModel.displayDecimal(on: countViewController, of: elements)
+        let testAddingDecimal = countViewModel.displayDecimal(of: elements)
         XCTAssertEqual(testAddingDecimal, ".")
     }
 
     func testCannotAddDecimal() {
         let elements = ["1."]
-        let countViewController = UIViewController()
-        let testAddingDecimal = countViewModel.displayDecimal(on: countViewController, of: elements)
+        let testAddingDecimal = countViewModel.displayDecimal(of: elements)
         XCTAssertEqual(testAddingDecimal, "")
     }
 
     func testGetResult() {
-        let countViewController = UIViewController()
         let elements = ["1", "+", "2"]
         var resultText = ""
-        countViewModel.getResult(on: countViewController, of: elements, resultText: &resultText)
-        XCTAssertTrue(resultText == "3")
+        let result = countViewModel.getResult(of: elements, resultText: resultText)
+        resultText = result
+        XCTAssertEqual(resultText, "3")
     }
 
     func testGetResultHasEnoughElements() {
-        let countViewController = UIViewController()
         let elements = ["1"]
         var resultText = ""
-        countViewModel.getResult(on: countViewController, of: elements, resultText: &resultText)
-        XCTAssertTrue(resultText == "")
+        let result = countViewModel.getResult(of: elements, resultText: resultText)
+        resultText = result
+        XCTAssertEqual(resultText, "0")
     }
 
     func testGetResultExpressionIsCorrect() {
-        let countViewController = UIViewController()
         let elements = ["1", "+"]
         var resultText = ""
-        countViewModel.getResult(on: countViewController, of: elements, resultText: &resultText)
-        XCTAssertTrue(resultText == "")
+        let result = countViewModel.getResult(of: elements, resultText: resultText)
+        resultText = result
+        XCTAssertEqual(resultText, "0")
     }
 
     func testUnitDisplay() {
-        let countViewController = UIViewController()
         let elements = ["1"]
         let unit = Calculate.Operator.add
         var displayView = "1"
         var resultView = "0"
-        let unitToDisplay = countViewModel.unitDisplay(on: countViewController, of: elements, unit: unit, displayView: &displayView, resultView: &resultView)
-        XCTAssertEqual(unitToDisplay, " +")
+        let (add, text, resultViewText) = countViewModel.unitDisplay(of: elements, unit: unit, displayView: displayView, resultView: resultView)
+        displayView = text
+        resultView = resultViewText
+        displayView.append(add)
+        XCTAssertTrue(displayView == "1 +")
+        XCTAssertTrue(resultView == "0")
     }
 
     func testUnitDisplayContinueWithResult() {
-        let countViewController = UIViewController()
         let elements = ["1", "+", "3"]
         let unit = Calculate.Operator.multiply
         var displayView = "1 + 3"
         var resultView = "4"
-        let unitToDisplay = countViewModel.unitDisplay(on: countViewController, of: elements, unit: unit, displayView: &displayView, resultView: &resultView)
-        XCTAssertEqual(unitToDisplay, " x")
+        let (multiply, text, resultViewText) = countViewModel.unitDisplay(of: elements, unit: unit, displayView: displayView, resultView: resultView)
+        displayView = text
+        resultView = resultViewText
+        displayView.append(multiply)
+        XCTAssertTrue(displayView == "4 x")
+        XCTAssertTrue(resultView == "0")
     }
 
     func testUnitDisplayAlertPopUp() {
-        let countViewController = UIViewController()
         let elements = ["1", "+"]
         let unit = Calculate.Operator.divide
         var displayView = "1 +"
         var resultView = "0"
-        let unitToDisplay = countViewModel.unitDisplay(on: countViewController, of: elements, unit: unit, displayView: &displayView, resultView: &resultView)
-        XCTAssertEqual(unitToDisplay, "")
+        let (divide, text, resultViewText) = countViewModel.unitDisplay(of: elements, unit: unit, displayView: displayView, resultView: resultView)
+        displayView = text
+        resultView = resultViewText
+        displayView.append(divide)
+        XCTAssertTrue(displayView == "1 +")
+        XCTAssertTrue(resultView == "0")
     }
 
     func testDisplayNumber() {
@@ -123,8 +135,11 @@ class CountOnMeViewModelTests: XCTestCase {
         let elements = [String]()
         let acButton = UIButton()
         acButton.titleLabel?.text = "AC"
-        let numberText = countViewModel.displayNumbers(from: numpadButton, of: elements, set: acButton)
-        XCTAssertEqual(numberText, "2")
+        var displayText = ""
+        let (numberText, acButtonTitle) = countViewModel.displayNumbers(from: numpadButton.title(for: .normal), of: elements)
+        displayText.append(numberText)
+        acButton.setTitle(acButtonTitle, for: .normal)
+        XCTAssertTrue(displayText == "2")
         XCTAssertTrue(acButton.title(for: .normal) == "C")
     }
 
@@ -134,8 +149,10 @@ class CountOnMeViewModelTests: XCTestCase {
         let elements = ["1", "+"]
         let acButton = UIButton()
         acButton.titleLabel?.text = "C"
-        let numberText = countViewModel.displayNumbers(from: numpadButton, of: elements, set: acButton)
+        let (numberText, acButtonTitle) = countViewModel.displayNumbers(from: numpadButton.title(for: .normal), of: elements)
+        acButton.setTitle(acButtonTitle, for: .normal)
         XCTAssertEqual(numberText, " 4")
+        XCTAssertTrue(acButton.title(for: .normal) == "C")
     }
 
     func testDisplayNumberDefaultValue() {
@@ -143,7 +160,8 @@ class CountOnMeViewModelTests: XCTestCase {
         let elements = ["1", "+"]
         let acButton = UIButton()
         acButton.titleLabel?.text = "C"
-        let numberText = countViewModel.displayNumbers(from: numpadButton, of: elements, set: acButton)
+        let (numberText, acButtonTitle) = countViewModel.displayNumbers(from: numpadButton.title(for: .normal), of: elements)
         XCTAssertEqual(numberText, "")
+        XCTAssertEqual(acButtonTitle, "")
     }
 }
