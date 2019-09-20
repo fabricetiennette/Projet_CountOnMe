@@ -3,10 +3,7 @@ osx_image: xcode10.3
 install:
   - ./install_swiftlint.sh
 script:
-<<<<<<< HEAD
 - swiftlint
-=======
->>>>>>> 2a59c97b6d3830fa063f10935d306357edc63628
 - xcodebuild clean build test -scheme CountOnMe -project CountOnMe.xcodeproj -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=12.4' ONLY_ACTIVE_ARCH=NO
 after_success:
   - bash <(curl -s https://codecov.io/bash)
