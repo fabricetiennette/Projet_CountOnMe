@@ -19,7 +19,11 @@ class Calculate {
 
     /// Checking if the expression is correct to preform calculation
     func expressionIsCorrect(elements: [String]) -> Bool {
-        return elements.last != Operator.add.rawValue && elements.last != Operator.substract.rawValue && elements.last != Operator.multiply.rawValue && elements.last != Operator.divide.rawValue && elements.last != "."
+        return elements.last != Operator.add.rawValue &&
+            elements.last != Operator.substract.rawValue &&
+            elements.last != Operator.multiply.rawValue &&
+            elements.last != Operator.divide.rawValue &&
+            elements.last != "."
     }
 
     /// Cheking if there is enough elements in the calcul

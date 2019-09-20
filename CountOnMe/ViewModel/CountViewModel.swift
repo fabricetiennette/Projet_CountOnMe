@@ -61,6 +61,9 @@ struct CountViewModel {
             displayView = resultView
             resultView = "0"
             return (" \(unit.rawValue)", displayView, resultView)
+        } else if displayView.count == 0 {
+            displayView = "0"
+            return (" \(unit.rawValue)", displayView, resultView)
         } else if calculate.expressionIsCorrect(elements: elements) {
             unitStr = " \(unit.rawValue)"
         }

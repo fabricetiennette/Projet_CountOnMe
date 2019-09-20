@@ -45,26 +45,26 @@ class CountOnMeUITests: XCTestCase {
 
     func testAddButton() {
         app.buttons["+"].tap()
-        let exists = app.textViews[" +"].exists
+        let exists = app.textViews["0 +"].exists
         XCTAssertTrue(exists)
 
     }
 
     func testSubtractButton() {
         app.buttons["-"].tap()
-        let exists = app.textViews[" -"].exists
+        let exists = app.textViews["0 -"].exists
         XCTAssertTrue(exists)
     }
 
     func testMultipliedButton() {
         app.buttons["x"].tap()
-        let exists = app.textViews[" x"].exists
+        let exists = app.textViews["0 x"].exists
         XCTAssertTrue(exists)
     }
 
     func testDivisionButton() {
         app.buttons["÷"].tap()
-        let exists = app.textViews[" ÷"].exists
+        let exists = app.textViews["0 ÷"].exists
         XCTAssertTrue(exists)
     }
 

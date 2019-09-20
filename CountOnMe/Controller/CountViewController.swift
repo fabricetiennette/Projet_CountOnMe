@@ -45,14 +45,19 @@ private extension CountViewController {
 
     // This method is used to erased the last element
     @IBAction func backSpaceButton() {
-       let (text, title) = countViewModel.eraseButtonTapped(displayText: displayTextView.text)
+        let (text, title) = countViewModel.eraseButtonTapped(displayText: displayTextView.text)
         displayTextView.text = text
         acButton.setTitle(title, for: .normal)
     }
 
     // division button
     @IBAction func divisionButton(_ sender: UIButton) {
-        let (division, text, resultView) = countViewModel.unitDisplay(of: elements, unit: .divide, displayView: displayTextView.text, resultView: resultTextView.text)
+        let (division, text, resultView) = countViewModel.unitDisplay(
+            of: elements,
+            unit: .divide,
+            displayView: displayTextView.text,
+            resultView: resultTextView.text
+        )
         displayTextView.text = text
         resultTextView.text = resultView
         displayTextView.text.append(division)
@@ -60,7 +65,12 @@ private extension CountViewController {
 
     // multiplication button
     @IBAction func multiplicationButton(_ sender: UIButton) {
-        let (multiply, text, resultView) = countViewModel.unitDisplay(of: elements, unit: .multiply, displayView: displayTextView.text, resultView: resultTextView.text)
+        let (multiply, text, resultView) = countViewModel.unitDisplay(
+            of: elements,
+            unit: .multiply,
+            displayView: displayTextView.text,
+            resultView: resultTextView.text
+        )
         displayTextView.text = text
         resultTextView.text = resultView
         displayTextView.text.append(multiply)
@@ -68,7 +78,12 @@ private extension CountViewController {
 
     // addition button
     @IBAction func additionButton() {
-        let (add, text, resultView) = countViewModel.unitDisplay(of: elements, unit: .add, displayView: displayTextView.text, resultView: resultTextView.text)
+        let (add, text, resultView) = countViewModel.unitDisplay(
+            of: elements,
+            unit: .add,
+            displayView: displayTextView.text,
+            resultView: resultTextView.text
+        )
         displayTextView.text = text
         resultTextView.text = resultView
         displayTextView.text.append(add)
@@ -76,7 +91,12 @@ private extension CountViewController {
 
     // substraction button
     @IBAction func substractionButton() {
-        let (substract, text, resultView) = countViewModel.unitDisplay(of: elements, unit: .substract, displayView: displayTextView.text, resultView: resultTextView.text)
+        let (substract, text, resultView) = countViewModel.unitDisplay(
+            of: elements,
+            unit: .substract,
+            displayView: displayTextView.text,
+            resultView: resultTextView.text
+        )
         displayTextView.text = text
         resultTextView.text = resultView
         displayTextView.text.append(substract)

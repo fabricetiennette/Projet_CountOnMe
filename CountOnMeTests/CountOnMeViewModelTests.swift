@@ -116,7 +116,7 @@ class CountOnMeViewModelTests: XCTestCase {
         XCTAssertTrue(resultView == "0")
     }
 
-    func testUnitDisplayAlertPopUp() {
+    func testUnitDisplayWhenAddingASecondOperator() {
         let elements = ["1", "+"]
         let unit = Calculate.Operator.divide
         var displayView = "1 +"
