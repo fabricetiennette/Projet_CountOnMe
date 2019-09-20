@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.com/fabricetiennette/CountOnMe.svg?branch=master)](https://travis-ci.com/fabricetiennette/CountOnMe)
+
+
 # Project 5 : CountOnMe
 
 ### A Calculator App.
