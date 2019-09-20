@@ -12,7 +12,7 @@ class CountViewController: UIViewController {
 
     /// Instance of CountViewModel
     let countViewModel = CountViewModel()
-
+    
     /// elements is an array for string 
     private var elements: [String] {
         return countViewModel.elementsRefactor(from: displayTextView.text)
