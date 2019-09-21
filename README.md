@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.com/fabricetiennette/Projet_CountOnMe.svg?branch=master)](https://travis-ci.com/fabricetiennette/Projet_CountOnMe)
 
-![Oops 🧐](./screenshots/IMG_1068.png) ![Oops 🧐](./screenshots/IMG_1069.png) 
+![Oops 🧐](./screenshots/atstart.png) ![Oops 🧐](./screenshots/withcalcul.png) 
 
 # Project 5 : CountOnMe
 
