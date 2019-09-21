@@ -10,7 +10,6 @@ import XCTest
 @testable import CountOnMe
 
 class CountOnMeViewModelTests: XCTestCase {
-
     var countViewModel: CountViewModel!
 
     override func setUp() {
@@ -89,7 +88,7 @@ class CountOnMeViewModelTests: XCTestCase {
         resultText = result
         XCTAssertEqual(resultText, "0")
     }
-
+    
     func testUnitDisplay() {
         let elements = ["1"]
         let unit = Calculate.Operator.add
@@ -102,7 +101,7 @@ class CountOnMeViewModelTests: XCTestCase {
         XCTAssertTrue(displayView == "1 +")
         XCTAssertTrue(resultView == "0")
     }
-
+    
     func testUnitDisplayContinueWithResult() {
         let elements = ["1", "+", "3"]
         let unit = Calculate.Operator.multiply
@@ -115,7 +114,7 @@ class CountOnMeViewModelTests: XCTestCase {
         XCTAssertTrue(displayView == "4 x")
         XCTAssertTrue(resultView == "0")
     }
-
+    
     func testUnitDisplayWhenAddingASecondOperator() {
         let elements = ["1", "+"]
         let unit = Calculate.Operator.divide
@@ -128,7 +127,7 @@ class CountOnMeViewModelTests: XCTestCase {
         XCTAssertTrue(displayView == "1 +")
         XCTAssertTrue(resultView == "0")
     }
-
+    
     func testDisplayNumber() {
         let numpadButton = UIButton()
         numpadButton.setTitle("2", for: .normal)
