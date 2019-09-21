@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/fabricetiennette/Projet_CountOnMe.svg?branch=master)](https://travis-ci.com/fabricetiennette/Projet_CountOnMe)  [![codecov.io](https://codecov.io/gh/cfabricetiennette/Projet_CountOnMe/branch/master/graphs/badge.svg)](https://codecov.io/gh/fabricetiennette/Projet_CountOnMe/branch/master)
+[![Build Status](https://travis-ci.com/fabricetiennette/Projet_CountOnMe.svg?branch=master)](https://travis-ci.com/fabricetiennette/Projet_CountOnMe)
 
 
 # Project 5 : CountOnMe
