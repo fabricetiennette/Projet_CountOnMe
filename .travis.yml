@@ -1,7 +1,5 @@
 language: swift 
 osx_image: xcode10.3
-notifications:
-  email: false
 script:
   - xcodebuild clean build test -scheme CountOnMe -project CountOnMe.xcodeproj -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=12.4'
 after_success:
