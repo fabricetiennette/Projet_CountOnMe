@@ -25,10 +25,12 @@ class Calculate {
             elements.last != Operator.divide.rawValue &&
             elements.last != "."
     }
+
     /// Cheking if there is enough elements in the calcul
     func expressionHasEnoughElement(elements: [String]) -> Bool {
         return elements.count >= 3
     }
+
     /// Check if last element contains a decimal point or is empty
     func isDecimalAddedToLast(elements: [String]) -> Bool {
         return elements.last?.contains(".") ?? false || elements.last?.isEmpty ?? true
