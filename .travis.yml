@@ -1,8 +1,8 @@
 language: swift 
-osx_image: xcode10.3
+osx_image: xcode11.3
 jobs:
   include:
-  - script: xcodebuild clean build test -scheme CountOnMe -project CountOnMe.xcodeproj -destination "platform=iOS Simulator,name=iPhone 8,OS=12.4" CODE_SIGN_IDENTITY=""
+  - script: xcodebuild clean build test -project CountOnMe.xcodeproj -scheme CountOnMe -destination "platform=iOS Simulator,name=iPhone 11,OS=13.3" CODE_SIGN_IDENTITY=""
       CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO -enableCodeCoverage YES
   - after_script: bash <(curl -s https://codecov.io/bash) -t 30688173-1264-4d91-9d1b-c130c49b3225
   
