@@ -19,9 +19,9 @@ class CountViewController: UIViewController {
     }
 
     // MARK: - Outlets
-    @IBOutlet weak private var displayTextView: UITextView!
-    @IBOutlet weak private var resultTextView: UITextView!
-    @IBOutlet weak private var acButton: UIButton!
+    @IBOutlet private weak var displayTextView: UITextView!
+    @IBOutlet private weak var resultTextView: UITextView!
+    @IBOutlet private weak var acButton: UIButton!
 }
 
 // MARK: - IBAction
